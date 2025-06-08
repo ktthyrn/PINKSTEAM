@@ -18,7 +18,7 @@ const FilterMenu = ({ filters, onFilterChange, types, genres, platforms }) => {
 
       <div className="filter-groups-container"> {/* NEW: Wrapper for filter groups */}
         <div className="filter-group">
-          <label htmlFor="type-filter">Type:</label>
+          <label htmlFor="type-filter">Tipo:</label>
           <div className="filter-select-wrapper">
             <select
               id="type-filter"
@@ -26,7 +26,7 @@ const FilterMenu = ({ filters, onFilterChange, types, genres, platforms }) => {
               value={filters.type}
               onChange={handleSelectChange}
             >
-              <option value="">All Types</option>
+              <option value="">Todos los tipos</option>
               {types.map(type => (
                 <option key={type} value={type}>{type}</option>
               ))}
@@ -35,7 +35,7 @@ const FilterMenu = ({ filters, onFilterChange, types, genres, platforms }) => {
         </div>
 
         <div className="filter-group">
-          <label htmlFor="genre-filter">Genre:</label>
+          <label htmlFor="genre-filter">Género:</label>
           <div className="filter-select-wrapper">
             <select
               id="genre-filter"
@@ -43,7 +43,7 @@ const FilterMenu = ({ filters, onFilterChange, types, genres, platforms }) => {
               value={filters.genre}
               onChange={handleSelectChange}
             >
-              <option value="">All Genres</option>
+              <option value="">Todos los géneros</option>
               {genres.map(genre => (
                 <option key={genre} value={genre}>{genre}</option>
               ))}
@@ -52,7 +52,7 @@ const FilterMenu = ({ filters, onFilterChange, types, genres, platforms }) => {
         </div>
 
         <div className="filter-group">
-          <label htmlFor="platform-filter">Platform:</label>
+          <label htmlFor="platform-filter">Plataforma:</label>
           <div className="filter-select-wrapper">
             <select
               id="platform-filter"
@@ -60,7 +60,7 @@ const FilterMenu = ({ filters, onFilterChange, types, genres, platforms }) => {
               value={filters.platform}
               onChange={handleSelectChange}
             >
-              <option value="">All Platforms</option>
+              <option value="">Todas las plataformas</option>
               {platforms.map(platform => (
                 <option key={platform} value={platform}>{platform}</option>
               ))}
@@ -68,7 +68,7 @@ const FilterMenu = ({ filters, onFilterChange, types, genres, platforms }) => {
           </div>
         </div>
         <button className="clear-filters-button" onClick={handleClearFilters}>
-        Clear Filters
+        Limpiar Filtros
       </button>
       </div> {/* END: Wrapper for filter groups */}
 

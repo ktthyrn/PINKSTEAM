@@ -204,7 +204,7 @@ const GamesPage = () => {
 
   return (
     <div className="game-list-page">
-      <h1>Search and Filter Games</h1>
+      <h1>Buscar y Filtrar Juegos</h1>
       <div className="content-wrapper">
         <FilterMenu
           filters={filters}

@@ -7,7 +7,7 @@ function GameList({ games, activeFilters }) {
   if (games.length === 0) {
     return (
       <div className="game-list-empty">
-        <p>No games found matching your criteria.</p>
+        <p>No encontramos juegos con tus criterios.</p>
       </div>
     );
   }
@@ -24,18 +24,18 @@ function GameList({ games, activeFilters }) {
               <h3 className="game-list-item-title">{game.title}</h3>
 
               {/* Conditionally render Type based on activeFilters */}
-              {!activeFilters.type && <p><strong>Type:</strong> {game.type || 'N/A'}</p>}
+              {!activeFilters.type && <p><strong>Tipo:</strong> {game.type || 'N/A'}</p>}
 
               {/* Conditionally render Genre based on activeFilters */}
-              {!activeFilters.genre && <p><strong>Genre:</strong> {game.genre || 'N/A'}</p>}
+              {!activeFilters.genre && <p><strong>Género:</strong> {game.genre || 'N/A'}</p>}
 
               {/* Conditionally render Platform based on activeFilters */}
-              {!activeFilters.platform && <p><strong>Platform:</strong> {game.platform || 'N/A'}</p>}
+              {!activeFilters.platform && <p><strong>Plataforma:</strong> {game.platform || 'N/A'}</p>}
 
               {/* Always show Price, Popularity, and Release Year */}
-              <p><strong>Price:</strong> ${game.price?.toFixed(2) || 'N/A'}</p>
-              <p><strong>Popularity:</strong> {game.popularity || 'N/A'} / 5</p>
-              <p><strong>Release Year:</strong> {game.releaseYear || 'N/A'}</p>
+              <p><strong>Precio:</strong> ${game.price?.toFixed(2) || 'N/A'}</p>
+              <p><strong>Popularidad:</strong> {game.popularity || 'N/A'} / 5</p>
+              <p><strong>Año de lanzamiento:</strong> {game.releaseYear || 'N/A'}</p>
             </div>
           </div>
         ) : (
