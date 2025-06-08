@@ -190,3 +190,179 @@
   background-color: #d81b60;
   transform: scale(1.05);
 } */
+
+/* --- INICIO DE NUEVOS ESTILOS PARA BIBLIOTECA Y CONTEXTO --- */
+
+/* Estilos para el botón "MI BIBLIOTECA" en el header */
+.header-buttons .btn.library-btn {
+  background-color: #f48fb1; /* Puedes usar un color similar al 'login' o elegir uno nuevo */
+  color: #1b1b1b;
+}
+
+/* Estilos para el contenedor de prueba del contexto (dentro de la navbar) */
+.navbar .game-context-test {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #3d1f2d;
+  font-family: 'Righteous', sans-serif;
+  font-size: 1.0rem;
+  margin-left: auto;
+  margin-right: 15px;
+}
+
+/* Ajuste importante para la navbar (asegúrate que ya tiene estas propiedades) */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Estilos para el botón de prueba "Añadir Test" */
+.navbar .game-context-test .btn.add-game-btn {
+  background-color: #5e3b3b;
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  border-radius: 15px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.navbar .game-context-test .btn.add-game-btn:hover {
+  transform: scale(1.05);
+  opacity: 0.8;
+}
+
+.navbar .game-context-test span {
+  font-weight: 700;
+}
+
+/* src/styles/home.css */
+
+/* ... (tus estilos existentes) ... */
+
+/* Asegúrate de que .game-gallery tenga un buen layout de cuadrícula */
+.game-gallery {
+    display: grid; /* Usamos grid para un control de columnas más robusto */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Columnas auto-ajustables */
+    gap: 25px; /* Espacio entre las tarjetas de juego */
+    padding: 2rem; /* Añade un poco de padding alrededor de la galería */
+    max-width: 1200px; /* Limita el ancho máximo de la galería */
+    margin: 2rem auto; /* Centra la galería y le da margen superior/inferior */
+    box-sizing: border-box; /* Asegura que el padding no añada ancho extra */
+}
+
+/* Estilos para el contenedor principal de la biblioteca, si no lo tenías bien */
+.library-page-container {
+    background: linear-gradient(to bottom, #f0e6ef, #d4a7b7); /* Un fondo suave y atractivo */
+    min-height: 100vh;
+    padding: 2rem;
+    font-family: 'Poppins', sans-serif;
+    color: #3d1f2d;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra el contenido */
+    box-sizing: border-box;
+}
+
+.library-page-container h1 {
+    font-family: 'Lilita One', sans-serif;
+    font-size: 3rem;
+    color: #3d1f2d;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+/* Ajustes específicos para el GameItem dentro de la galería (si aplica) */
+/* El GameItem debería tener la clase .game-card */
+.game-card {
+    background-color: #fbeff2; /* Fondo de la tarjeta */
+    border-radius: 15px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); /* Sombra suave */
+    overflow: hidden; /* Asegura que la imagen no se salga de los bordes redondeados */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Empuja el botón al final */
+    height: 100%; /* Asegura que las tarjetas tengan la misma altura si están en una fila */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.game-card:hover {
+    transform: translateY(-5px); /* Efecto de elevación al pasar el ratón */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+.game-image {
+    width: 100%;
+    height: 180px; /* Altura fija para las imágenes de los juegos */
+    object-fit: cover; /* Recorta la imagen para que encaje */
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.game-title {
+    font-family: 'Concert One', sans-serif;
+    font-size: 1.4rem;
+    color: #b23a65; /* Color del título */
+    padding: 1rem 0.8rem 0.5rem; /* Espaciado */
+    text-align: center;
+    margin: 0;
+}
+
+/* Estilos para el botón "Descargar" dentro de GameItem */
+/* Estos estilos deben ir en el archivo CSS que estés usando para DownloadButton,
+   o si lo estás incrustando, asegúrate de que la clase .download-btn tenga esto. */
+.btn.download-btn { /* Apunta a la clase 'btn' y 'download-btn' */
+    background-color: #5e3b3b; /* Color oscuro similar al de tu botón de registrarse */
+    color: #ffffff;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    font-family: 'Righteous', sans-serif;
+    border: none;
+    border-radius: 20px; /* Bordes más redondeados */
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: block; /* Ocupa todo el ancho disponible */
+    width: calc(100% - 20px); /* Ancho del botón con padding */
+    margin: 0.5rem auto 1rem auto; /* Centra el botón y da margen */
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.btn.download-btn:hover {
+    transform: scale(1.02);
+    opacity: 0.9;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilos para el mensaje de "Aún no tienes juegos" */
+.library-page-container p {
+    font-size: 1.2rem;
+    color: #5e3b3b;
+    text-align: center;
+    margin-top: 3rem;
+}
+
+/* Media Queries para ajustar columnas en pantallas grandes */
+@media (max-width: 992px) {
+    .game-gallery {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .game-gallery {
+        grid-template-columns: 1fr; /* Una sola columna en pantallas pequeñas */
+        padding: 1rem;
+        gap: 15px;
+    }
+    .library-page-container h1 {
+        font-size: 2.5rem;
+    }
+}
+/* --- FIN DE NUEVOS ESTILOS PARA BIBLIOTECA Y CONTEXTO --- */

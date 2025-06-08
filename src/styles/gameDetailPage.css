@@ -1,0 +1,249 @@
+/* src/styles/gameDetailPage.css */
+
+.game-detail-container {
+    background: linear-gradient(to bottom, #f5c4d4, #b23a65); /* Fondo PinkSteam */
+    min-height: 100vh;
+    padding: 2rem;
+    font-family: 'Poppins', sans-serif; /* Fuente principal */
+    color: #3d1f2d; /* Color de texto oscuro */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.game-detail-container.loading {
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.detail-header {
+    width: 100%;
+    max-width: 1000px; /* Ancho máximo para el header */
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(61, 31, 45, 0.2);
+    font-family: 'Lilita One', sans-serif;
+    color: #3d1f2d;
+}
+
+.detail-header h1 {
+    font-size: 2.5rem;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.back-button {
+    background-color: #f48fb1; /* Rosa claro */
+    color: #1b1b1b;
+    padding: 0.8rem 1.6rem;
+    font-size: 1.1rem;
+    font-family: 'Concert One', sans-serif;
+    border: none;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.back-button:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+/* Nuevo Layout Principal para el Contenido del Juego */
+.game-content-layout {
+    background-color: #fbeff2; /* Fondo claro para la sección de contenido */
+    border-radius: 20px;
+    padding: 2.5rem;
+    max-width: 1000px; /* Ancho máximo para todo el contenido del juego */
+    width: 100%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column; /* Por defecto en columna para pantallas pequeñas */
+    gap: 2.5rem;
+}
+
+/* Sección Superior (Imagen/Video + Acciones) */
+.top-section {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.game-media {
+    width: 100%;
+    position: relative; /* Para el video, si se usa */
+}
+
+.game-main-image {
+    width: 100%;
+    max-height: 500px; /* Altura máxima para la imagen principal */
+    object-fit: cover;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+}
+
+.game-video {
+    border-radius: 15px; /* Bordes redondeados para el video */
+}
+
+.game-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrar botones */
+    gap: 1rem;
+}
+
+/* Estilos para los botones de acción (Descargar/Añadir) */
+.btn { /* Clase base para todos los botones */
+    padding: 1rem 2.5rem;
+    font-size: 1.2rem;
+    font-family: 'Righteous', sans-serif;
+    border: none;
+    border-radius: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    width: 80%; /* Ancho para los botones en móviles */
+    max-width: 300px; /* Ancho máximo para los botones */
+}
+
+.add-to-library-btn {
+    background-color: #f48fb1; /* Rosa claro */
+    color: #1b1b1b;
+}
+
+.download-btn {
+    background-color: #5e3b3b; /* Marrón oscuro */
+    color: #ffffff;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Sección de Descripción y Detalles */
+.game-details-main {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.section-subtitle {
+    font-family: 'Concert One', sans-serif;
+    font-size: 1.8rem;
+    color: #b23a65; /* Rosa oscuro */
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+.game-description {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #3d1f2d;
+    text-align: justify;
+}
+
+.game-info-blocks p {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+    color: #3d1f2d;
+}
+
+.game-info-blocks strong {
+    color: #b23a65; /* Resalta las categorías */
+}
+
+/* Estilos para las etiquetas (tags) */
+.game-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    margin-top: 1rem;
+}
+
+.tag {
+    background-color: #ffe0f0; /* Fondo más claro para las etiquetas */
+    color: #b23a65; /* Color de texto rosa oscuro */
+    padding: 0.6rem 1.2rem;
+    border-radius: 20px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+.tag:hover {
+    background-color: #f48fb1; /* Rosa claro al pasar el ratón */
+    color: #1b1b1b;
+}
+
+/* === Media Queries para diseño responsive === */
+
+@media (min-width: 768px) {
+    .game-content-layout {
+        flex-direction: row; /* Diseño en dos columnas para pantallas medianas */
+        align-items: flex-start; /* Alinea el contenido superior */
+    }
+
+    .top-section {
+        width: 60%; /* La sección de media y acciones ocupa el 60% */
+        flex-direction: column; /* Asegura que imagen y botones sigan en columna */
+        gap: 1.5rem;
+    }
+
+    .game-actions {
+        flex-direction: row; /* Botones en fila */
+        justify-content: flex-start; /* Alinea los botones a la izquierda */
+        width: 100%;
+    }
+    .btn {
+        width: auto; /* El ancho del botón se ajusta al contenido */
+        max-width: none;
+    }
+
+    .game-details-main {
+        width: 40%; /* La descripción ocupa el 40% */
+        padding-left: 2.5rem; /* Espacio entre las columnas */
+        border-left: 1px solid rgba(61, 31, 45, 0.1); /* Separador visual */
+        gap: 1rem; /* Menos espacio entre elementos */
+    }
+
+    .section-subtitle {
+        font-size: 1.6rem; /* Ajusta el tamaño de la fuente */
+    }
+    .game-description {
+        font-size: 1rem; /* Ajusta el tamaño de la fuente */
+    }
+}
+
+@media (min-width: 1024px) {
+    .game-content-layout {
+        padding: 3rem;
+        gap: 3rem;
+    }
+
+    .detail-header h1 {
+        font-size: 3rem;
+    }
+
+    .top-section {
+        width: 65%; /* Más espacio para la sección de media */
+    }
+
+    .game-details-main {
+        width: 35%; /* Menos espacio para la descripción */
+        padding-left: 3rem;
+    }
+}
