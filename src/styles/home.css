@@ -96,6 +96,20 @@
     /* text-decoration: none; */
 }
 
+.nav-link {
+  color: #3d1f2d;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.nav-link:hover {
+  background-color: #f48fb1;
+  color: #ffffff;
+}
+
 
 .search-bar {
   padding: 0.6rem 1.2rem;
@@ -158,3 +172,21 @@
   font-size: 1rem;
   color: #3d1f2d;
 }
+
+/* Estilos para los botones del menú en la navbar */
+.btn.menu {
+  background-color: #fbeff2;
+  color: #3d1f2d;
+  padding: 0.5rem 1rem;
+  border: none;
+  font-family: 'Righteous', sans-serif;
+  font-size: 1.1rem;  
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* .btn.menu:hover {
+  background-color: #d81b60;
+  transform: scale(1.05);
+} */
