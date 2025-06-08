@@ -1,0 +1,160 @@
+/* Google Fonts - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap');
+/* Nueva fuente sugerida para Header y Navbar */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap');
+/* Fuentes para el Header, botones y títulos de sección */
+@import url('https://fonts.googleapis.com/css2?family=Lilita+One&family=Concert+One&family=Righteous&display=swap'); /* Añadida Righteous */
+
+
+/* Fondo general y tipografía */
+.home-container {
+  background: linear-gradient(to bottom, #b23a65, #f5c4d4);
+  min-height: 100vh;
+  padding: 2rem;
+  font-family: 'Poppins', sans-serif;
+  color: #3d1f2d;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-family: 'Lilita One', sans-serif;
+  flex-wrap: wrap;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo-img {
+  width: 90px;
+  margin-right: 8px;
+}
+
+.title {
+  font-size: 2.5rem; /* Tamaño de fuente para "Pink Steam" */
+}
+
+/* Botones */
+.header-buttons {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.header-buttons .btn {
+  padding: 0.8rem 1.6rem;
+  font-size: 1.1rem;
+  font-family: 'Concert One', sans-serif; /* Se mantiene Concert One para los botones */
+  
+  border: none;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.login {
+  background-color: #f48fb1;
+  color: #1b1b1b;
+}
+
+.register {
+  background-color: #5e3b3b;
+  color: #ffffff;
+}
+
+.header-buttons .btn:hover {
+  transform: scale(1.15);
+  opacity: 0.9;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #fbeff2;
+  border-radius: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.9rem 1.8rem;
+  margin-bottom: 1.8rem;
+  font-family: 'Righteous', sans-serif; /* ¡Fuente Righteous aplicada aquí! */
+  font-size: 1.1rem; /* Ajustado ligeramente el tamaño para Righteous, si es necesario */
+}
+
+/* Asumiendo que los elementos de navegación (Menú, etc.) están dentro de la navbar */
+/* Si tienes links de navegación específicos (ej. <a class="nav-link">), también podrías apuntarles: */
+.navbar a { /* Esto es un ejemplo, ajusta el selector si tus links tienen una clase */
+    font-family: 'Righteous', sans-serif;
+    font-size: 1.1rem; /* Asegura que los links individuales también tengan el tamaño */
+    /* Puedes añadir más estilos aquí para los links si no se ven bien */
+    /* color: #3d1f2d; */ /* Un color que combine bien */
+    /* text-decoration: none; */
+}
+
+
+.search-bar {
+  padding: 0.6rem 1.2rem;
+  border-radius: 12px;
+  border: none;
+  font-size: 1.05rem;
+}
+
+/* Contenido principal */
+.main-content {
+  background-color: #f5d5dc;
+  padding: 2rem;
+  border-radius: 20px;
+  overflow-y: auto;
+}
+
+.section-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  font-family: 'Concert One', sans-serif;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* === CAMBIOS PRINCIPALES AQUÍ ABAJO === */
+
+/* Galería de juegos: ahora es responsiva */
+.game-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+}
+
+/* Tarjeta de juego: ahora es flexible */
+.game-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  width: 100%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+  text-align: center;
+}
+
+.game-card:hover {
+  transform: scale(1.05);
+}
+
+/* Imagen del juego: ¡Aquí está la magia! */
+.game-image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-bottom: 1px solid #eee;
+}
+
+.game-title {
+  padding: 1rem;
+  font-weight: bold;
+  font-size: 1rem;
+  color: #3d1f2d;
+}
