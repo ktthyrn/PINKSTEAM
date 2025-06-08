@@ -7,7 +7,8 @@
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
     width: 30%; /* Increase the width of the filter menu */
     max-width: 800px; /* Set a maximum width for better responsiveness */
-    margin:0 auto;
+    margin: 0; /* Remove auto margin to align to the left */
+    align-self: flex-start; /* Align the filter menu to the left */
     flex-shrink: 0;
     font-family: 'Poppins', sans-serif;
     color: #3d1f2d;
@@ -17,7 +18,7 @@
   
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center content horizontally */
+    align-items: left; /* Center content horizontally */
   }
   
   .filter-menu:hover {
@@ -197,6 +198,12 @@
   .tags-dropdown option, .platform-dropdown option {
     background-color: #ffe6f0;
     color: #b23a65;
+  }
+  
+  .price-slider {
+    width: 100%; /* Make the slider take up the full width of its container */
+    margin: 0.5rem auto; /* Center the slider horizontally */
+    display: block; /* Ensure it behaves as a block element */
   }
   
   /* Responsive adjustments */
