@@ -5,15 +5,15 @@
     border-radius: 20px;
     padding: 1.5rem; /* Consistent padding */
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-    width: 120%;
-    min-width: 1000px;
-    max-width: 2000px;
+    width: 100%; /* Adjusted to fit the container */
+    max-width: 800px; /* Set a maximum width for better responsiveness */
     margin: 0 auto;
     flex-shrink: 0;
     font-family: 'Poppins', sans-serif;
     color: #3d1f2d;
     transform: translateY(0);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: static; /* Reset to default so it scrolls with the page */
   
     display: flex;
     flex-direction: column;
@@ -125,17 +125,19 @@
   }
   
   .clear-filters-button {
+    display: block;
+    margin: 1rem auto; /* Center the button */
     width: 200px;
     padding: 1rem 1.8rem;
-    background-color: #ff6b81;
+    background-color: #d81b60; /* Updated color for better visibility */
     color: white;
     border: none;
-    border-radius: 30px;
+    border-radius: 20px;
     font-family: 'Concert One', sans-serif;
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
     text-transform: uppercase;
     letter-spacing: 0.8px;
@@ -145,15 +147,62 @@
   }
   
   .clear-filters-button:hover {
-    background-color: #e04a60;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    background-color: #b23a65; /* Slightly darker on hover */
+    transform: scale(1.05); /* Add a hover effect */
+  }
+  
+  .selected-tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .selected-tag {
+    background-color: #b23a65;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .selected-tag:hover {
+    background-color: #9a2b53;
+  }
+  
+  .tags-dropdown, .platform-dropdown {
+    background-color: #ffe6f0;
+    border: 2px solid #f48fb1;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 1rem;
+    color: #b23a65;
+    font-family: 'Poppins', sans-serif;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.08);
+  }
+  
+  .tags-dropdown:hover, .platform-dropdown:hover {
+    border-color: #d81b60;
+  }
+  
+  .tags-dropdown:focus, .platform-dropdown:focus {
+    outline: none;
+    border-color: #b23a65;
+    box-shadow: 0 0 0 4px rgba(178, 58, 101, 0.3);
+  }
+  
+  .tags-dropdown option, .platform-dropdown option {
+    background-color: #ffe6f0;
+    color: #b23a65;
   }
   
   /* Responsive adjustments */
   @media (min-width: 993px) {
     .filter-menu {
-      position: sticky;
+      position: static;
       top: 2rem;
       align-self: flex-start;
       width: auto;

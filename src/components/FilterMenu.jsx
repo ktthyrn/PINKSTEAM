@@ -1,80 +1,89 @@
 // src/components/FilterMenu.js
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/FilterMenu.css'; // Import your CSS styles
 
-const FilterMenu = ({ filters, onFilterChange, types, genres, platforms }) => {
-  const handleSelectChange = (e) => {
-    const { name, value } = e.target;
-    onFilterChange({ [name]: value });
-  };
+const FilterMenu = ({
+  tags,
+  selectedTags,
+  onTagSelection,
+  onClearFilters,
+  platforms,
+  selectedPlatform,
+  onPlatformChange
+}) => {
+  const [dropdownValue, setDropdownValue] = useState('');
 
-  const handleClearFilters = () => {
-    onFilterChange({ type: '', genre: '', platform: '' });
+  const handleDropdownChange = (e) => {
+    const value = e.target.value;
+    setDropdownValue(value);
+    if (value && !selectedTags.includes(value)) {
+      onTagSelection(value);
+    }
   };
 
   return (
     <div className="filter-menu">
+      <h3>Filtrar Juegos</h3>
 
+      {/* Tags Dropdown Section */}
+      <div className="filter-section">
+        <h4>Selecciona Etiquetas</h4>
+        <select
+          value={dropdownValue}
+          onChange={handleDropdownChange}
+          className="tags-dropdown"
+        >
+          <option value="">Selecciona una etiqueta</option>
+          {tags.map((tag) => (
+            <option key={tag} value={tag}>
+              {tag}
+            </option>
+          ))}
+        </select>
 
-      <div className="filter-groups-container"> {/* NEW: Wrapper for filter groups */}
-        <div className="filter-group">
-          <label htmlFor="type-filter">Tipo:</label>
-          <div className="filter-select-wrapper">
-            <select
-              id="type-filter"
-              name="type"
-              value={filters.type}
-              onChange={handleSelectChange}
+        <div className="selected-tags-container">
+          {selectedTags.map((tag) => (
+            <span
+              key={tag}
+              className="selected-tag"
+              onClick={() => onTagSelection(tag)} // Remove tag on click
             >
-              <option value="">Todos los tipos</option>
-              {types.map(type => (
-                <option key={type} value={type}>{type}</option>
-              ))}
-            </select>
-          </div>
+              {tag} ✕
+            </span>
+          ))}
         </div>
+      </div>
 
-        <div className="filter-group">
-          <label htmlFor="genre-filter">Género:</label>
-          <div className="filter-select-wrapper">
-            <select
-              id="genre-filter"
-              name="genre"
-              value={filters.genre}
-              onChange={handleSelectChange}
-            >
-              <option value="">Todos los géneros</option>
-              {genres.map(genre => (
-                <option key={genre} value={genre}>{genre}</option>
-              ))}
-            </select>
-          </div>
-        </div>
+      {/* Platform Dropdown Section */}
+      <div className="filter-section">
+        <h4>Selecciona Plataforma</h4>
+        <select
+          value={selectedPlatform}
+          onChange={(e) => onPlatformChange(e.target.value)}
+          className="platform-dropdown"
+        >
+          <option value="">Todas las plataformas</option>
+          {platforms.map((platform) => (
+            <option key={platform} value={platform}>
+              {platform}
+            </option>
+          ))}
+        </select>
+      </div>
 
-        <div className="filter-group">
-          <label htmlFor="platform-filter">Plataforma:</label>
-          <div className="filter-select-wrapper">
-            <select
-              id="platform-filter"
-              name="platform"
-              value={filters.platform}
-              onChange={handleSelectChange}
-            >
-              <option value="">Todas las plataformas</option>
-              {platforms.map(platform => (
-                <option key={platform} value={platform}>{platform}</option>
-              ))}
-            </select>
-          </div>
-        </div>
-        <button className="clear-filters-button" onClick={handleClearFilters}>
+      {/* Clear Filters Button */}
+      <button className="clear-filters-button" onClick={onClearFilters}>
         Limpiar Filtros
       </button>
-      </div> {/* END: Wrapper for filter groups */}
-
-
     </div>
   );
+};
+
+FilterMenu.defaultProps = {
+  tags: [],
+  platforms: [],
+  selectedTags: [],
+  selectedPlatform: '',
 };
 
 export default FilterMenu;
