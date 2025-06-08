@@ -7,16 +7,19 @@
     padding: 2rem; /* Padding general */
     font-family: 'Poppins', sans-serif; /* Consistencia en la fuente principal */
     color: #3d1f2d; /* Color de texto principal */
+    position: relative; /* Ensure the parent container has a relative position */
   }
   
   /* Contenedor principal que envuelve el menú de filtros y la lista de juegos */
   .content-wrapper {
     display: flex; /* Para que el menú y la lista se coloquen uno al lado del otro */
+    flex-direction: row; /* Cambia el orden para que la lista de juegos aparezca a la izquierda */
     gap: 2rem; /* Espacio entre el menú de filtros y la lista de juegos */
     align-items: flex-start; /* Alinea los elementos al inicio (arriba) */
-    flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
+    /*flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
     max-width: 1200px; /* Ancho máximo para el contenido para centrarlo si es necesario */
     margin: 0 auto; /* Centrar el contenedor en pantallas grandes */
+    overflow: visible; /* Ensure no overflow styles interfere with sticky positioning */
   }
   
   /* Título de la sección dentro de GameListPage (si tienes uno) */
