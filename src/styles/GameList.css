@@ -1,0 +1,142 @@
+/* src/components/GameList.css */
+
+.game-list-container {
+    flex-grow: 1;
+    background-color: #f5d5dc;
+    padding: 1.5rem 2rem;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px; /* Ensure the game list has the same maximum width as the filter menu */
+    margin: 0 auto; /* Center the game list horizontally */
+  }
+  
+  .game-list-item {
+    background-color: transparent;
+    border-radius: 0;
+    padding: 0.8rem 0;
+    box-shadow: none;
+    border-bottom: 1px solid rgba(178, 58, 101, 0.3);
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center; /* Vertically align image and details in the center */
+    gap: 1rem;
+  }
+  
+  .game-list-item:last-child {
+    border-bottom: none;
+  }
+  
+  .game-list-item:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: none;
+    box-shadow: none;
+  }
+  
+  .game-list-item-thumbnail {
+    width: 90px; /* FIXED WIDTH */
+    height: 60px; /* FIXED HEIGHT - Image will be constrained to these dimensions */
+    object-fit: cover; /* Ensures image covers the box, cropping if necessary */
+    border-radius: 3px;
+    flex-shrink: 0; /* Prevents image from shrinking if space is tight */
+  }
+  
+  .game-list-item-details {
+    flex-grow: 1; /* Allows details to take up available space */
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start; /* Align details to the top, allowing the container to grow */
+    gap: 0.2rem 1rem; /* Reduced gap slightly for vertical compactness */
+  }
+  
+  .game-list-item-title {
+    font-family: 'Righteous', sans-serif;
+    font-size: 1.4rem;
+    color: #b23a65;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-basis: 100%; /* Title takes full width */
+  }
+  
+  .game-list-item p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.85rem;
+    color: #5e3b3b;
+    margin: 0;
+    line-height: 1.2;
+    /* Removed white-space: nowrap; from here to allow text to wrap if it gets too long */
+    /* This is important for "card" (list item) height to increase with text */
+  }
+  
+  .game-list-item p strong {
+    color: #3d1f2d;
+  }
+  
+  .game-list-empty {
+    font-family: 'Poppins', sans-serif;
+    color: #5e3b3b;
+    font-size: 1.1rem;
+    text-align: center;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    align-self: center;
+    width: 100%;
+    max-width: 450px;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .game-list-container {
+      padding: 1rem 1.5rem;
+    }
+    .game-list-item {
+      flex-direction: column; /* Stack thumbnail and details vertically on small screens */
+      text-align: center; /* Center text when stacked vertically */
+      gap: 0.5rem;
+      align-items: center; /* Center items when stacked */
+    }
+    .game-list-item-thumbnail {
+      width: 100px; /* Still fixed width, but slightly larger for mobile */
+      height: 70px; /* Still fixed height, but slightly larger for mobile */
+      margin-bottom: 0.5rem;
+    }
+    .game-list-item-title {
+      font-size: 1.3rem;
+      text-align: center;
+      margin-left: 0;
+      margin-right: 0;
+    }
+    .game-list-item p {
+      font-size: 0.8rem;
+      text-align: center;
+      margin-left: 0;
+      margin-right: 0;
+      white-space: normal; /* Allow text to wrap on mobile */
+    }
+    .game-list-item-details {
+      flex-direction: column;
+      gap: 0.2rem;
+      align-items: center; /* Center details when stacked */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .game-list-container {
+      padding: 0.8rem 1rem;
+    }
+    .game-list-item {
+      padding: 0.6rem 0;
+    }
+    .game-list-item-title {
+      font-size: 1.2rem;
+    }
+    .game-list-item p {
+      font-size: 0.75rem;
+    }
+  }

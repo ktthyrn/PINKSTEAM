@@ -42,7 +42,7 @@ const Home = () => {
       </header>
 
       <nav className="navbar">
-      <button className="btn menu" onClick={() => navigate("/GamesPage")}>
+      <button className="btn menu" onClick={() => navigate("/games")}>
           MENU
         </button>
         <span className="support">

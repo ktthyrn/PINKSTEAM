@@ -1,21 +1,49 @@
+// src/components/GameList.js
 import React from 'react';
+import '../styles/GameList.css'; // Import your CSS styles
 
-function GameList({ games }) {
+// Receive activeFilters as a prop
+function GameList({ games, activeFilters }) {
+  if (games.length === 0) {
+    return (
+      <div className="game-list-empty">
+        <p>No games found matching your criteria.</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="game-list">
-      {games.length > 0 ? (
-        games.map((game) => (
-          <div key={game.id} className="game-item">
-            <h4>{game.title}</h4>
-            <p>Type: {game.type}</p>
-            <p>Genre: {game.genre}</p>
-            <p>Platform: {game.platform}</p>
-            <p>Rating: {game.rating}</p>
+    <div className="game-list-container">
+      {games.map((game, index) => (
+        game && game.title ? (
+          <div key={game.id || index} className="game-list-item">
+            {game.thumbnail && (
+              <img src={game.thumbnail} alt={`${game.title} Thumbnail`} className="game-list-item-thumbnail" />
+            )}
+            <div className="game-list-item-details">
+              <h3 className="game-list-item-title">{game.title}</h3>
+
+              {/* Conditionally render Type based on activeFilters */}
+              {!activeFilters.type && <p><strong>Type:</strong> {game.type || 'N/A'}</p>}
+
+              {/* Conditionally render Genre based on activeFilters */}
+              {!activeFilters.genre && <p><strong>Genre:</strong> {game.genre || 'N/A'}</p>}
+
+              {/* Conditionally render Platform based on activeFilters */}
+              {!activeFilters.platform && <p><strong>Platform:</strong> {game.platform || 'N/A'}</p>}
+
+              {/* Always show Price, Popularity, and Release Year */}
+              <p><strong>Price:</strong> ${game.price?.toFixed(2) || 'N/A'}</p>
+              <p><strong>Popularity:</strong> {game.popularity || 'N/A'} / 5</p>
+              <p><strong>Release Year:</strong> {game.releaseYear || 'N/A'}</p>
+            </div>
           </div>
-        ))
-      ) : (
-        <p>No games found.</p>
-      )}
+        ) : (
+          <div key={index} className="game-list-item">
+            <p>Invalid game data</p>
+          </div>
+        )
+      ))}
     </div>
   );
 }
