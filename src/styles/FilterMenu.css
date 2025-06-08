@@ -206,6 +206,32 @@
     display: block; /* Ensure it behaves as a block element */
   }
   
+  .text-filter-section {
+    margin-top: 1rem; /* Add spacing between the title and the text filter */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .text-filter-input {
+    width: 90%; /* Make the input take most of the width */
+    padding: 0.8rem 1rem; /* Add padding for a modern look */
+    border: 2px solid #f48fb1; /* Add a border with a modern color */
+    border-radius: 10px; /* Rounded corners for a modern look */
+    font-size: 1rem; /* Adjust font size */
+    font-family: 'Poppins', sans-serif; /* Consistent font */
+    color: #3d1f2d; /* Text color */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+  }
+
+  .text-filter-input:focus {
+    outline: none;
+    border-color: #d81b60; /* Highlight border on focus */
+    box-shadow: 0 0 0 4px rgba(216, 27, 96, 0.3); /* Add focus shadow */
+  }
+  
   /* Responsive adjustments */
   @media (min-width: 993px) {
     .filter-menu {

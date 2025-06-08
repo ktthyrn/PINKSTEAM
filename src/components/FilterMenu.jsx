@@ -10,7 +10,8 @@ const FilterMenu = ({
   platforms,
   selectedPlatform,
   onPlatformChange,
-  onPriceChange
+  onPriceChange,
+  onTextFilterChange
 }) => {
   const [dropdownValue, setDropdownValue] = useState('');
   const [priceRange, setPriceRange] = useState(100);
@@ -32,6 +33,16 @@ const FilterMenu = ({
   return (
     <div className="filter-menu">
       <h3>Filtrar Juegos</h3>
+
+      {/* Text Filter Section */}
+      <div className="filter-section text-filter-section">
+        <input
+          type="text"
+          placeholder="🔍 Buscar juegos..."
+          onChange={(e) => onTextFilterChange(e.target.value)}
+          className="text-filter-input"
+        />
+      </div>
 
       {/* Tags Dropdown Section */}
       <div className="filter-section">

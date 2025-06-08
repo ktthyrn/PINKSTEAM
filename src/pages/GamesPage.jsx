@@ -8,6 +8,7 @@ const GamesPage = () => {
   const [selectedPlatform, setSelectedPlatform] = useState(''); // State for platform filter
   const [selectedPriceRange, setSelectedPriceRange] = useState([0, 100]); // State for price filter
   const [selectedPopularity, setSelectedPopularity] = useState(0); // State for popularity filter
+  const [textFilter, setTextFilter] = useState(""); // State for text filter
   const [games, setGames] = useState([
     {
       id: 1,
@@ -197,18 +198,24 @@ const GamesPage = () => {
     setSelectedPopularity(popularity); // Update the selected popularity
   };
 
+  const handleTextFilterChange = (text) => {
+    setTextFilter(text.toLowerCase()); // Update the text filter state
+  };
+
   const handleClearFilters = () => {
     setSelectedTags([]); // Clear all selected tags
     setSelectedPlatform(''); // Clear the selected platform
     setSelectedPriceRange([0, 100]); // Clear the selected price range
     setSelectedPopularity(0); // Clear the selected popularity
+    setTextFilter(""); // Clear the text filter
   };
 
   const filteredGames = games.filter((game) =>
     (selectedTags.length === 0 || selectedTags.every((tag) => game.tags.includes(tag))) &&
     (selectedPlatform === '' || game.platform.includes(selectedPlatform)) &&
     (game.price >= selectedPriceRange[0] && game.price <= selectedPriceRange[1]) && // Filter by price range
-    (selectedPopularity === 0 || game.popularity === selectedPopularity) // Filter by popularity
+    (selectedPopularity === 0 || game.popularity === selectedPopularity) && // Filter by popularity
+    (textFilter === "" || game.title.toLowerCase().includes(textFilter)) // Filter by text
   );
 
   const allTags = [...new Set(games.flatMap((game) => game.tags))];
@@ -231,6 +238,7 @@ const GamesPage = () => {
           selectedPopularity={selectedPopularity}
           onPopularityChange={handlePopularityChange}
           games={games}
+          onTextFilterChange={handleTextFilterChange} // Pass the handler to FilterMenu
         />
         <GameList games={filteredGames} />
       </div>
