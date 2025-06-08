@@ -5,7 +5,7 @@
     border-radius: 20px;
     padding: 1.5rem; /* Consistent padding */
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-    width: 100%; /* Adjusted to fit the container */
+    width: 30%; /* Increase the width of the filter menu */
     max-width: 800px; /* Set a maximum width for better responsiveness */
     margin:0 auto;
     flex-shrink: 0;

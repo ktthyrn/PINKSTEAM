@@ -12,6 +12,7 @@ const FilterMenu = ({
   onPlatformChange
 }) => {
   const [dropdownValue, setDropdownValue] = useState('');
+  const [priceRange, setPriceRange] = useState([0, 100]);
 
   const handleDropdownChange = (e) => {
     const value = e.target.value;
@@ -19,6 +20,11 @@ const FilterMenu = ({
     if (value && !selectedTags.includes(value)) {
       onTagSelection(value);
     }
+  };
+
+  const handlePriceRangeChange = (e) => {
+    const value = e.target.value.split(',').map(Number);
+    setPriceRange(value);
   };
 
   return (
@@ -69,6 +75,24 @@ const FilterMenu = ({
             </option>
           ))}
         </select>
+      </div>
+
+      {/* Price Range Section */}
+      <div className="filter-section">
+        <h4>Rango de Precio</h4>
+        <input
+          type="range"
+          min="0"
+          max="100"
+          step="1"
+          value={priceRange}
+          onChange={handlePriceRangeChange}
+          className="price-range-input"
+        />
+        <div className="price-values">
+          <span>${priceRange[0]}</span>
+          <span>{priceRange[1]}</span>
+        </div>
       </div>
 
       {/* Clear Filters Button */}
