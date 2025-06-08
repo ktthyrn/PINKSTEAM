@@ -9,10 +9,11 @@ const FilterMenu = ({
   onClearFilters,
   platforms,
   selectedPlatform,
-  onPlatformChange
+  onPlatformChange,
+  onPriceChange
 }) => {
   const [dropdownValue, setDropdownValue] = useState('');
-  const [priceRange, setPriceRange] = useState([0, 100]);
+  const [priceRange, setPriceRange] = useState(100);
 
   const handleDropdownChange = (e) => {
     const value = e.target.value;
@@ -23,8 +24,9 @@ const FilterMenu = ({
   };
 
   const handlePriceRangeChange = (e) => {
-    const value = e.target.value.split(',').map(Number);
+    const value = parseInt(e.target.value, 10);
     setPriceRange(value);
+    onPriceChange(0, value); // Always filter from 0 to the selected maximum price
   };
 
   return (
@@ -79,7 +81,7 @@ const FilterMenu = ({
 
       {/* Price Range Section */}
       <div className="filter-section">
-        <h4>Rango de Precio</h4>
+        <h4>Precio Máximo</h4>
         <input
           type="range"
           min="0"
@@ -87,11 +89,10 @@ const FilterMenu = ({
           step="1"
           value={priceRange}
           onChange={handlePriceRangeChange}
-          className="price-range-input"
+          className="price-slider"
         />
         <div className="price-values">
-          <span>${priceRange[0]}</span>
-          <span>{priceRange[1]}</span>
+          <span>Hasta: ${priceRange}</span>
         </div>
       </div>
 
