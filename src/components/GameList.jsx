@@ -3,7 +3,7 @@ import React from 'react';
 import '../styles/GameList.css'; // Import your CSS styles
 
 // Receive activeFilters as a prop
-function GameList({ games, activeFilters }) {
+function GameList({ games }) {
   if (games.length === 0) {
     return (
       <div className="game-list-empty">
@@ -22,17 +22,7 @@ function GameList({ games, activeFilters }) {
             )}
             <div className="game-list-item-details">
               <h3 className="game-list-item-title">{game.title}</h3>
-
-              {/* Conditionally render Type based on activeFilters */}
-              {!activeFilters.type && <p><strong>Tipo:</strong> {game.type || 'N/A'}</p>}
-
-              {/* Conditionally render Genre based on activeFilters */}
-              {!activeFilters.genre && <p><strong>Género:</strong> {game.genre || 'N/A'}</p>}
-
-              {/* Conditionally render Platform based on activeFilters */}
-              {!activeFilters.platform && <p><strong>Plataforma:</strong> {game.platform || 'N/A'}</p>}
-
-              {/* Always show Price, Popularity, and Release Year */}
+              <p><strong>Etiquetas:</strong> {game.tags.join(', ')}</p>
               <p><strong>Precio:</strong> ${game.price?.toFixed(2) || 'N/A'}</p>
               <p><strong>Popularidad:</strong> {game.popularity || 'N/A'} / 5</p>
               <p><strong>Año de lanzamiento:</strong> {game.releaseYear || 'N/A'}</p>

@@ -1,219 +1,253 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'; // Asegúrate de que useState esté importado
 import FilterMenu from '../components/FilterMenu';
 import GameList from '../components/GameList';
 import '../styles/GameListPage.css';
 
 const GamesPage = () => {
-  const [filters, setFilters] = useState({ type: '', genre: '', platform: '' });
-  const [games] = useState([
+  // Estado para los filtros (ajustado para usar estados individuales)
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [selectedPlatform, setSelectedPlatform] = useState('');
+  const [selectedPriceRange, setSelectedPriceRange] = useState([0, 100]); // Rango de precios inicial
+  const [selectedPopularity, setSelectedPopularity] = useState(0); // Popularidad inicial (0 o null si no se filtra por popularidad)
+  const [textFilter, setTextFilter] = useState(""); // Filtro de texto inicial
 
+  // Lista de juegos (la mantienes como estaba, usando useState una vez para inicializarla)
+  const [games] = useState([
     {
-        id: 1,
-        title: "The Witcher 3",
-        type: "RPG",
-        genre: "Fantasy",
-        platform: "PC, PS4, Xbox One, Switch",
-        rating: 9.7,
-        price: 29.99,
-        popularity: 5, // 1-5 scale
-        releaseYear: 2015,
-        thumbnail: "/games/witcher.jpg"
-      },
-      {
-        id: 2,
-        title: "Doom Eternal",
-        type: "FPS",
-        genre: "Action",
-        platform: "PC, PS4, Xbox One, Switch",
-        rating: 9.0,
-        price: 39.99,
-        popularity: 4,
-        releaseYear: 2020,
-        thumbnail: "/games/doom.jpg"
-      },
-      {
-        id: 3,
-        title: "Cyberpunk 2077",
-        type: "RPG",
-        genre: "Sci-Fi",
-        platform: "PC, PS5, Xbox Series X",
-        rating: 7.5,
-        price: 59.99,
-        popularity: 4,
-        releaseYear: 2020,
-        thumbnail: "/games/cyberpunk.jpg"
-      },
-      {
-        id: 4,
-        title: "Minecraft",
-        type: "Sandbox",
-        genre: "Survival, Building",
-        platform: "Multi",
-        rating: 9.2,
-        price: 26.99,
-        popularity: 5,
-        releaseYear: 2011, // Original release
-        thumbnail: "/games/minecraft.jpg"
-      },
-      {
-        id: 5,
-        title: "Overwatch",
-        type: "FPS",
-        genre: "Team-based Shooter",
-        platform: "PC, PS4, Xbox One, Switch",
-        rating: 8.5,
-        price: 0.00, // Free-to-play
-        popularity: 3,
-        releaseYear: 2016,
-        thumbnail: "/games/overwatch.jpg"
-      },
-      {
-        id: 6,
-        title: "Hades",
-        type: "Roguelike",
-        genre: "Action-RPG",
-        platform: "PC, Switch, PS5, Xbox Series X",
-        rating: 9.3,
-        price: 24.99,
-        popularity: 4,
-        releaseYear: 2020,
-        thumbnail: "/games/hades.jpg"
-      },
-      {
-        id: 7,
-        title: "Celeste",
-        type: "Platformer",
-        genre: "Adventure",
-        platform: "PC, PS4, Xbox One, Switch",
-        rating: 9.4,
-        price: 19.99,
-        popularity: 3,
-        releaseYear: 2018,
-        thumbnail: "/games/celeste.jpg"
-      },
-      {
-        id: 8,
-        title: "Hollow Knight",
-        type: "Metroidvania",
-        genre: "Action-Adventure",
-        platform: "PC, PS4, Xbox One, Switch",
-        rating: 9.6,
-        price: 14.99,
-        popularity: 4,
-        releaseYear: 2017,
-        thumbnail: "/games/hollowknight.jpg"
-      },
-      {
-        id: 9,
-        title: "God of War",
-        type: "Action-Adventure",
-        genre: "Mythology",
-        platform: "PS4, PC",
-        rating: 9.5,
-        price: 19.99,
-        popularity: 5,
-        releaseYear: 2018,
-        thumbnail: "/games/godofwar.jpg"
-      },
-      {
-        id: 10,
-        title: "Red Dead Redemption 2",
-        type: "Action-Adventure",
-        genre: "Western",
-        platform: "PS4, Xbox One, PC",
-        rating: 9.8,
-        price: 39.99,
-        popularity: 5,
-        releaseYear: 2018,
-        thumbnail: "/games/reddead2.jpg"
-      },
-      {
-        id: 11,
-        title: "Stardew Valley",
-        type: "Simulation",
-        genre: "Life Sim, Farming",
-        platform: "Multi",
-        rating: 9.1,
-        price: 14.99,
-        popularity: 4,
-        releaseYear: 2016,
-        thumbnail: "/games/stardew.jpg"
-      },
-      {
-        id: 12,
-        title: "Valorant",
-        type: "FPS",
-        genre: "Tactical Shooter",
-        platform: "PC",
-        rating: 8.7,
-        price: 0.00, // Free-to-play
-        popularity: 4,
-        releaseYear: 2020,
-        thumbnail: "/games/valorant.jpg"
-      },
-      {
-        id: 13,
-        title: "Apex Legends",
-        type: "FPS",
-        genre: "Battle Royale",
-        platform: "PC, PS4, Xbox One, Switch",
-        rating: 8.3,
-        price: 0.00, // Free-to-play
-        popularity: 3,
-        releaseYear: 2019,
-        thumbnail: "/games/apex.jpg"
-      },
-      {
-        id: 14,
-        title: "Elden Ring",
-        type: "RPG",
-        genre: "Action-RPG, Fantasy",
-        platform: "PC, PS5, Xbox Series X",
-        rating: 9.6,
-        price: 59.99,
-        popularity: 5,
-        releaseYear: 2022,
-        thumbnail: "/games/eldenring.jpg"
-      },
-      {
-        id: 15,
-        title: "Terraria",
-        type: "Sandbox",
-        genre: "Adventure, Building",
-        platform: "Multi",
-        rating: 9.0,
-        price: 9.99,
-        popularity: 4,
-        releaseYear: 2011,
-        thumbnail: "/games/terraria.jpg"
-      }
-  // Add more games as needed
+      id: 1,
+      title: "The Witcher 3",
+      tags: ["RPG", "Fantasy", "PC", "PS4", "Xbox One", "Switch"],
+      platform: "PC, PS4, Xbox One, Switch",
+      rating: 9.7,
+      price: 29.99,
+      popularity: 5,
+      releaseYear: 2015,
+      thumbnail: "/games/witcher.jpg"
+    },
+    {
+      id: 2,
+      title: "Doom Eternal",
+      tags: ["FPS", "Action", "PC", "PS4", "Xbox One", "Switch"],
+      platform: "PC, PS4, Xbox One, Switch",
+      rating: 9.0,
+      price: 39.99,
+      popularity: 4,
+      releaseYear: 2020,
+      thumbnail: "/games/doom.jpg"
+    },
+    {
+      id: 3,
+      title: "Cyberpunk 2077",
+      tags: ["RPG", "Sci-Fi", "PC", "PS5", "Xbox Series X"],
+      platform: "PC, PS5, Xbox Series X",
+      rating: 7.5,
+      price: 59.99,
+      popularity: 4,
+      releaseYear: 2020,
+      thumbnail: "/games/cyberpunk.jpg"
+    },
+    {
+      id: 4,
+      title: "Minecraft",
+      tags: ["Sandbox", "Survival", "Building", "Multi"],
+      platform: "Multi",
+      rating: 9.2,
+      price: 26.99,
+      popularity: 5,
+      releaseYear: 2011,
+      thumbnail: "/games/minecraft.jpg"
+    },
+    {
+      id: 5,
+      title: "Overwatch",
+      tags: ["FPS", "Team-based Shooter", "PC", "PS4", "Xbox One", "Switch"],
+      platform: "PC, PS4, Xbox One, Switch",
+      rating: 8.5,
+      price: 0.00,
+      popularity: 3,
+      releaseYear: 2016,
+      thumbnail: "/games/overwatch.jpg"
+    },
+    {
+      id: 6,
+      title: "Hades",
+      tags: ["Roguelike", "Action-RPG", "PC", "Switch", "PS5", "Xbox Series X"],
+      platform: "PC, Switch, PS5, Xbox Series X",
+      rating: 9.3,
+      price: 24.99,
+      popularity: 4,
+      releaseYear: 2020,
+      thumbnail: "/games/hades.jpg"
+    },
+    {
+      id: 7,
+      title: "Celeste",
+      tags: ["Platformer", "Adventure", "PC", "PS4", "Xbox One", "Switch"],
+      platform: "PC, PS4, Xbox One, Switch",
+      rating: 9.4,
+      price: 19.99,
+      popularity: 3,
+      releaseYear: 2018,
+      thumbnail: "/games/celeste.jpg"
+    },
+    {
+      id: 8,
+      title: "Hollow Knight",
+      tags: ["Metroidvania", "Action-Adventure", "PC", "PS4", "Xbox One", "Switch"],
+      platform: "PC, PS4, Xbox One, Switch",
+      rating: 9.6,
+      price: 14.99,
+      popularity: 4,
+      releaseYear: 2017,
+      thumbnail: "/games/hollowknight.jpg"
+    },
+    {
+      id: 9,
+      title: "God of War",
+      tags: ["Action-Adventure", "Mythology", "PS4", "PC"],
+      platform: "PS4, PC",
+      rating: 9.5,
+      price: 19.99,
+      popularity: 5,
+      releaseYear: 2018,
+      thumbnail: "/games/godofwar.jpg"
+    },
+    {
+      id: 10,
+      title: "Red Dead Redemption 2",
+      tags: ["Action-Adventure", "Western", "PS4", "Xbox One", "PC"],
+      platform: "PS4, Xbox One, PC",
+      rating: 9.8,
+      price: 39.99,
+      popularity: 5,
+      releaseYear: 2018,
+      thumbnail: "/games/reddead2.jpg"
+    },
+    {
+      id: 11,
+      title: "Stardew Valley",
+      tags: ["Simulation", "Life Sim", "Farming", "Multi"],
+      platform: "Multi",
+      rating: 9.1,
+      price: 14.99,
+      popularity: 4,
+      releaseYear: 2016,
+      thumbnail: "/games/stardew.jpg"
+    },
+    {
+      id: 12,
+      title: "Valorant",
+      tags: ["FPS", "Tactical Shooter", "PC"],
+      platform: "PC",
+      rating: 8.7,
+      price: 0.00,
+      popularity: 4,
+      releaseYear: 2020,
+      thumbnail: "/games/valorant.jpg"
+    },
+    {
+      id: 13,
+      title: "Apex Legends",
+      tags: ["FPS", "Battle Royale", "PC", "PS4", "Xbox One", "Switch"],
+      platform: "PC, PS4, Xbox One, Switch",
+      rating: 8.3,
+      price: 0.00,
+      popularity: 3,
+      releaseYear: 2019,
+      thumbnail: "/games/apex.jpg"
+    },
+    {
+      id: 14,
+      title: "Elden Ring",
+      tags: ["RPG", "Action-RPG", "Fantasy", "PC", "PS5", "Xbox Series X"],
+      platform: "PC, PS5, Xbox Series X",
+      rating: 9.6,
+      price: 59.99,
+      popularity: 5,
+      releaseYear: 2022,
+      thumbnail: "/games/eldenring.jpg"
+    },
+    {
+      id: 15,
+      title: "Terraria",
+      tags: ["Sandbox", "Adventure", "Building", "Multi"],
+      platform: "Multi",
+      rating: 9.0,
+      price: 9.99,
+      popularity: 4,
+      releaseYear: 2011,
+      thumbnail: "/games/terraria.jpg"
+    }
   ]);
 
-  const handleFilterChange = (newFilters) => {
-    setFilters((prevFilters) => ({ ...prevFilters, ...newFilters }));
+  // Las funciones de manejo de cambios ya estaban correctas, solo necesitaban los estados declarados
+  const handleTagSelection = (tag) => {
+    setSelectedTags((prevTags) =>
+      prevTags.includes(tag)
+        ? prevTags.filter((t) => t !== tag)
+        : [...prevTags, tag]
+    );
   };
 
-  const filteredGames = games.filter((game) => {
-    return (
-      (!filters.type || game.type === filters.type) &&
-      (!filters.genre || game.genre === filters.genre) &&
-      (!filters.platform || game.platform === filters.platform)
-    );
-  });
+  const handlePlatformChange = (platform) => {
+    setSelectedPlatform(platform);
+  };
+
+  const handlePriceChange = (min, max) => {
+    setSelectedPriceRange([min, max]);
+  };
+
+  const handlePopularityChange = (popularity) => {
+    setSelectedPopularity(popularity);
+  };
+
+  const handleTextFilterChange = (text) => {
+    setTextFilter(text.toLowerCase());
+  };
+
+  const handleClearFilters = () => {
+    setSelectedTags([]);
+    setSelectedPlatform('');
+    setSelectedPriceRange([0, 100]);
+    setSelectedPopularity(0);
+    setTextFilter("");
+  };
+
+  // Lógica de filtrado
+  const filteredGames = games.filter((game) =>
+    (selectedTags.length === 0 || selectedTags.every((tag) => game.tags.includes(tag))) &&
+    (selectedPlatform === '' || game.platform.includes(selectedPlatform)) &&
+    (game.price >= selectedPriceRange[0] && game.price <= selectedPriceRange[1]) &&
+    (selectedPopularity === 0 || game.popularity === selectedPopularity) &&
+    (textFilter === "" || game.title.toLowerCase().includes(textFilter))
+  );
+
+  // Extracción de tags y plataformas únicas para los filtros
+  const allTags = [...new Set(games.flatMap((game) => game.tags))];
+  const allPlatforms = [...new Set(games.flatMap((game) => game.platform.split(', ')))];
 
   return (
     <div className="game-list-page">
       <h1>Buscar y Filtrar Juegos</h1>
       <div className="content-wrapper">
         <FilterMenu
-          filters={filters}
-          onFilterChange={handleFilterChange}
-          types={[...new Set(games.map((game) => game.type))]}
-          genres={[...new Set(games.map((game) => game.genre))]}
-          platforms={[...new Set(games.map((game) => game.platform))]}
+          tags={allTags}
+          selectedTags={selectedTags}
+          onTagSelection={handleTagSelection}
+          onClearFilters={handleClearFilters}
+          selectedPlatform={selectedPlatform}
+          onPlatformChange={handlePlatformChange}
+          platforms={allPlatforms}
+          selectedPriceRange={selectedPriceRange}
+          onPriceChange={handlePriceChange}
+          selectedPopularity={selectedPopularity}
+          onPopularityChange={handlePopularityChange}
+          // 'games' no es estrictamente necesario pasarlo a FilterMenu a menos que FilterMenu lo use para generar sus propias opciones dinámicamente,
+          // pero si ya le pasas allTags y allPlatforms, no hay problema.
+          // games={games} 
+          onTextFilterChange={handleTextFilterChange}
         />
-        <GameList games={filteredGames} activeFilters={filters} />
+        <GameList games={filteredGames} />
       </div>
     </div>
   );

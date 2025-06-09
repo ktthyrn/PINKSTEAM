@@ -9,7 +9,7 @@
     min-height: 400px;
     display: flex;
     flex-direction: column;
-    max-width: 1200px; /* Ensure the game list has the same maximum width as the filter menu */
+    max-width: 900px; /* Ensure the game list has the same maximum width as the filter menu */
     margin: 0 auto; /* Center the game list horizontally */
   }
   
@@ -120,7 +120,7 @@
       white-space: normal; /* Allow text to wrap on mobile */
     }
     .game-list-item-details {
-      flex-direction: column;
+      flex-direction: row-reverse;
       gap: 0.2rem;
       align-items: center; /* Center details when stacked */
     }
