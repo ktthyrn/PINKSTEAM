@@ -1,51 +1,81 @@
-// RegisterForm.jsx
-import React, { useState } from "react";
-import "./../styles/auth.css"; // Mantén la importación del CSS
+// src/components/RegisterForm.jsx
+import React, { useState, useContext } from 'react';
+import { AuthContext } from '../contexts/AuthContext'; // CAMBIO: de context a contexts
+import './../styles/auth.css';
 
 const RegisterForm = () => {
-  const [form, setForm] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [error, setError] = useState('');
 
-  const handleChange = (e) =>
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { login } = useContext(AuthContext);
 
-  const handleRegister = (e) => {
-    e.preventDefault();
-    if (!form.username || !form.email || !form.password) {
-      alert("Completa todos los campos");
-      return;
-    }
-    // TODO: conectar con backend
-    console.log("Registrando usuario:", form);
-  };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError('');
 
-  return (
-    <form className="auth-form" onSubmit={handleRegister}> {/* Usa la clase auth-form */}
-      <h2>Crear Cuenta</h2> {/* Mantiene el h2 con estilos de auth.css */}
-      <input
-        type="text"
-        name="username"
-        placeholder="Nombre de usuario"
-        onChange={handleChange}
-      />
-      <input
-        type="email"
-        name="email"
-        placeholder="Correo electrónico"
-        onChange={handleChange}
-      />
-      <input
-        type="password"
-        name="password"
-        placeholder="Contraseña"
-        onChange={handleChange}
-      />
-      <button type="submit" className="auth-button">Registrarse</button> {/* Añadida clase auth-button */}
-    </form>
-  );
+        if (password !== confirmPassword) {
+            setError('Las contraseñas no coinciden.');
+            return;
+        }
+
+        try {
+            await new Promise(resolve => setTimeout(resolve, 1000));
+
+            console.log('Simulando registro exitoso para:', email);
+            login({ email: email, username: 'NuevoUsuario' });
+
+        } catch (err) {
+            setError('Error al registrar usuario. Inténtalo de nuevo.');
+            console.error('Error de registro:', err);
+        }
+    };
+
+    return (
+        <form className="auth-form" onSubmit={handleSubmit}>
+            <h2 className="form-title">Registrarse</h2>
+            {error && <p className="error-message">{error}</p>}
+
+            <div className="input-group">
+                <label htmlFor="register-email">Correo electrónico</label>
+                <input
+                    type="email"
+                    id="register-email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                />
+            </div>
+            <div className="input-group">
+                <label htmlFor="register-password">Contraseña</label>
+                <input
+                    type="password"
+                    id="register-password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                />
+            </div>
+            <div className="input-group">
+                <label htmlFor="confirm-password">Confirmar Contraseña</label>
+                <input
+                    type="password"
+                    id="confirm-password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    required
+                />
+            </div>
+            <button type="submit" className="btn submit-btn">
+                Registrarse
+            </button>
+        </form>
+    );
+};
+
+RegisterForm.propTypes = {
+    // Ya no se requiere onRegisterSuccess
 };
 
 export default RegisterForm;

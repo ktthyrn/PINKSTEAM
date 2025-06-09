@@ -1,0 +1,52 @@
+/* src/styles/gameItem.css */
+
+/* Estilos de la tarjeta de juego individual (GameItem) */
+.game-card {
+    background-color: #ffffff; /* Fondo blanco para la tarjeta */
+    border-radius: 15px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    width: 100%; /* Ocupa el ancho completo de su columna en la galería */
+    height: 100%; /* Asegura que todas las tarjetas tengan la misma altura si están en una fila */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.game-card:hover {
+    transform: translateY(-8px); /* Efecto de elevación más pronunciado */
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3); /* Sombra más grande al pasar el ratón */
+}
+
+.game-image {
+    width: 100%;
+    height: 250px; /* CAMBIO: Aumenta la altura de la imagen a 250px para hacerlas más grandes */
+    object-fit: cover; /* Asegura que la imagen cubra el área sin distorsionarse */
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.game-title {
+    font-family: 'Righteous', sans-serif;
+    font-size: 1.6rem; /* Mantenemos este tamaño, o puedes ajustarlo si lo quieres más grande */
+    color: #1b1b1b; /* CAMBIO: Color de texto NEGRO */
+    padding: 1.2rem 1rem;
+    text-align: center;
+    margin: 0;
+    line-height: 1.3;
+    min-height: 4.2rem; /* Ajusta la altura mínima para que los títulos de 2 líneas quepan bien */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Media queries para gameItem.css (ajusta estas alturas si es necesario) */
+@media (max-width: 768px) {
+    .game-image {
+        height: 180px; /* Altura ajustada en móviles */
+    }
+    .game-title {
+        font-size: 1.4rem; /* Tamaño de título ajustado en móviles */
+        min-height: 3.8rem;
+    }
+}

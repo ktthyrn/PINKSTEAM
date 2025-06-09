@@ -1,14 +1,16 @@
-// Home.jsx (Página principal de PinkSteam)
-import React from "react";
+// src/pages/Home.jsx
+import React, { useContext} from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/home.css";
-import { useContext } from 'react';
 import { GameContext } from "../contexts/GameContext";
+import { AuthContext } from '../contexts/AuthContext'; 
+
 import GameItem from '../components/GameItem';
 
 const Home = () => {
   const navigate = useNavigate();
-  const { library, addToLibrary } = useContext(GameContext);
+  const { library} = useContext(GameContext); // removeFromLibrary ya no es necesario aquí
+  const { isLoggedIn, user, logout } = useContext(AuthContext); 
 
   const games = [
     { id: 1, title: "The Witcher 3", image: "/games/witcher.jpg" },
@@ -36,30 +38,43 @@ const Home = () => {
           <h1 className="title">PinkSteam</h1>
         </div>
         <div className="header-buttons">
-          <button className="btn library" onClick={() => navigate("/library")}>
-            MI BIBLIOTECA
-          </button>
-          <button className="btn login" onClick={() => navigate("/login")}>
-            INICIAR SESIÓN
-          </button>
-          <button className="btn register" onClick={() => navigate("/register")}>
-            REGISTRARSE
-          </button>
+          {isLoggedIn ? (
+            <>
+              {/* CAMBIO 1: Reordenar y ajustar el mensaje de bienvenida y biblioteca */}
+              <button className="btn library" onClick={() => navigate("/library")}>
+                MI BIBLIOTECA
+              </button>
+              <span className="welcome-message">Hola, {user ? user.username : 'Usuario'}</span>
+              <button className="btn logout" onClick={logout}>
+                Cerrar Sesión
+              </button>
+            </>
+          ) : (
+            <>
+              <button className="btn games" onClick={() => navigate("/games")}> 
+                JUEGOS
+              </button>
+              <button className="btn login" onClick={() => navigate("/login")}>
+                INICIAR SESIÓN
+              </button>
+              <button className="btn register" onClick={() => navigate("/register")}>
+                REGISTRARSE
+              </button>
+            </>
+          )}
         </div>
       </header>
 
       <nav className="navbar">
-      <button className="btn menu" onClick={() => navigate("/games")}>
+        <button className="btn menu" onClick={() => navigate("/games")}>
           MENU
         </button>
         <span className="support">
           <i className="fa-solid fa-desktop"></i> ACERCA DE SOPORTE
         </span>
-                <div className="game-context-test">
-          <span>Biblioteca: **{library.length}** juegos</span>
-          <button className="btn add-game-btn" onClick={() => addToLibrary(Math.floor(Math.random() * 1000) + 1)}>
-            Añadir Test
-          </button>
+        <div className="game-context-test">
+          {/* CAMBIO 2: Eliminar "Añadir Test" y los asteriscos */}
+          <span>Biblioteca: {library.length} juegos</span> 
         </div>
         <input type="text" className="search-bar" placeholder="BUSCAR" />
       </nav>
@@ -67,14 +82,14 @@ const Home = () => {
       <main className="main-content">
         <h2 className="section-title">NUESTROS JUEGOS ...</h2>
         <div className="game-gallery">
-        {games.map((game) => (
-          <div
-            key={game.id} // Siempre usa un ID único si lo tienes
-            className="game-card-link" // Una nueva clase para estilos de cursor, etc.
-            onClick={() => navigate(`/game/${game.id}`)} // ¡Hace el GameItem clicable!
-          >
-            <GameItem game={game} /> {/* Aquí no queremos showDownloadButton */}
-          </div>
+          {games.map((game) => (
+            <div
+              key={game.id} 
+              className="game-card-link" 
+              onClick={() => navigate(`/game/${game.id}`)} 
+            >
+              <GameItem game={game} />
+            </div>
           ))}
         </div>
       </main>

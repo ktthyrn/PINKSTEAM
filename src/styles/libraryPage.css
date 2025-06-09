@@ -1,0 +1,88 @@
+/* src/styles/libraryPage.css */
+
+.library-page-container {
+    background: linear-gradient(to bottom, #f5c4d4, #b23a65); /* Fondo PinkSteam */
+    min-height: 100vh;
+    padding: 2rem;
+    font-family: 'Poppins', sans-serif; /* Fuente principal */
+    color: #3d1f2d; /* Color de texto oscuro */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.library-header {
+    width: 100%;
+    max-width: 1200px; /* AUMENTADO: Ancho máximo para el encabezado */
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.library-title {
+    font-family: 'Lilita One', sans-serif; /* Tu fuente de títulos */
+    font-size: 3rem;
+    color: #3d1f2d; /* Color oscuro para el título */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 0;
+}
+
+.library-content {
+    background-color: #fbeff2; /* Fondo claro para la sección de contenido */
+    border-radius: 20px;
+    padding: 2.5rem;
+    max-width: 1200px; /* AUMENTADO: Ancho máximo para el contenido de la biblioteca */
+    width: 100%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrar las tarjetas horizontalmente */
+}
+
+.empty-library-message {
+    font-size: 1.2rem;
+    color: #b23a65;
+    font-weight: bold;
+    text-align: center;
+    padding: 3rem;
+}
+
+.library-games-list {
+    width: 100%; /* Ocupa el 100% del contenedor padre */
+    display: flex;
+    flex-direction: column; /* Las tarjetas se apilan verticalmente */
+    align-items: center; /* Centra las tarjetas horizontales */
+    gap: 1.5rem; /* Espacio entre cada tarjeta de juego */
+}
+
+/* Media Queries */
+@media (min-width: 768px) {
+    .library-title {
+        font-size: 3.5rem;
+    }
+
+    .library-content {
+        padding: 3.5rem;
+    }
+}
+
+/* Ajustes para pantallas más pequeñas si es necesario */
+@media (max-width: 1200px) {
+    .library-header,
+    .library-content {
+        max-width: 90%; /* Un porcentaje para adaptarse mejor a anchos de pantalla */
+    }
+}
+
+@media (max-width: 768px) {
+    .library-page-container {
+        padding: 1rem;
+    }
+    .library-title {
+        font-size: 2.5rem;
+    }
+    .library-content {
+        padding: 1.5rem;
+        border-radius: 15px; /* Bordes un poco menos redondeados en móviles */
+    }
+}

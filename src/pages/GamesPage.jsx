@@ -5,7 +5,7 @@ import '../styles/GameListPage.css';
 
 const GamesPage = () => {
   const [filters, setFilters] = useState({ type: '', genre: '', platform: '' });
-  const [games, setGames] = useState([
+  const [games] = useState([
 
     {
         id: 1,

@@ -1,0 +1,126 @@
+/* src/styles/libraryGameItem.css */
+
+.library-game-card {
+    background-color: #fbeff2; /* Color de fondo claro para la tarjeta */
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    display: flex; /* Para layout horizontal */
+    align-items: center; /* Centrar verticalmente los elementos */
+    padding: 1.5rem 2.8rem; /* AUMENTADO: Más padding para una tarjeta aún más grande */
+    margin-bottom: 2rem; /* AUMENTADO: Espacio entre tarjetas para que sea más notable */
+    width: 100%; /* Ocupa el ancho completo disponible */
+    max-width: 1050px; /* AUMENTADO: Ancho máximo para la tarjeta, permitiendo que sea más grande */
+    box-sizing: border-box; /* Incluir padding en el ancho */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.library-game-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.library-game-image {
+    width: 160px; /* AUMENTADO: Ancho fijo para la imagen del juego */
+    height: 96px; /* AUMENTADO: Altura fija para la imagen del juego (ratio 16:9) */
+    object-fit: cover; /* Ajustar la imagen manteniendo la proporción */
+    border-radius: 10px;
+    margin-right: 2rem; /* AUMENTADO: Espacio a la derecha de la imagen */
+}
+
+.library-game-info {
+    flex-grow: 1; /* Permite que la información ocupe el espacio restante */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.library-game-title {
+    font-family: 'Righteous', sans-serif; /* Tu fuente de títulos */
+    font-size: 2rem; /* AUMENTADO: Tamaño de fuente del título */
+    color: #b23a65; /* Rosa oscuro */
+    margin: 0;
+    line-height: 1.2;
+}
+
+/* Estilos para el botón de Descargar */
+.btn.library-download-btn {
+    background-color: #5e3b3b; /* Marrón oscuro para el botón */
+    color: #ffffff;
+    padding: 1.2rem 2.5rem; /* AUMENTADO: Padding del botón */
+    font-size: 1.3rem; /* AUMENTADO: Tamaño de fuente del botón */
+    font-family: 'Concert One', sans-serif;
+    border: none;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    white-space: nowrap; /* Evita que el texto del botón se rompa */
+    margin-left: 1.8rem; /* AUMENTADO: Espacio a la izquierda del botón */
+}
+
+.btn.library-download-btn:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Media queries para pantallas más pequeñas */
+@media (max-width: 992px) { /* Ajuste para tablets/pantallas medianas */
+    .library-game-card {
+        padding: 1.2rem 1.5rem;
+        max-width: 800px; /* Ajusta el ancho máximo de la tarjeta */
+        margin-bottom: 1.5rem;
+    }
+    .library-game-image {
+        width: 140px;
+        height: 84px;
+        margin-right: 1.5rem;
+    }
+    .library-game-title {
+        font-size: 1.7rem;
+    }
+    .btn.library-download-btn {
+        padding: 1rem 2rem;
+        font-size: 1.2rem;
+        margin-left: 1.5rem;
+    }
+}
+
+
+@media (max-width: 600px) {
+    .library-game-card {
+        flex-direction: column; /* Apilar elementos en pantallas pequeñas */
+        align-items: center; /* Centrar elementos en columna */
+        padding: 1.5rem;
+        margin-bottom: 1.2rem;
+        max-width: 95%; /* Ocupa casi todo el ancho en móviles */
+    }
+
+    .library-game-image {
+        width: 180px; /* Imagen más grande en móvil cuando se apila */
+        height: 108px;
+        margin-right: 0;
+        margin-bottom: 1.2rem; /* Espacio debajo de la imagen */
+    }
+
+    .library-game-info {
+        width: 100%;
+        text-align: center; /* Centrar texto en móviles */
+        margin-bottom: 1.2rem; /* Espacio debajo del título en móviles */
+    }
+
+    .library-game-title {
+        font-size: 1.7rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .btn.library-download-btn {
+        width: 100%; /* Botón ocupa todo el ancho */
+        margin-top: 0.8rem; /* Espacio encima del botón */
+        margin-left: 0;
+        padding: 1rem 2rem;
+        font-size: 1.2rem;
+    }
+}
