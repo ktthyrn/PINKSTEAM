@@ -1,6 +1,6 @@
 // src/components/LoginForm.jsx
 import React, { useState, useContext } from 'react'; // Importa useContext
-import PropTypes from 'prop-types';
+
 import { AuthContext } from '../contexts/AuthContext'; // Importa AuthContext
 import './../styles/auth.css'; // Asegúrate de que esta ruta sea correcta para tus estilos de formularios
 
