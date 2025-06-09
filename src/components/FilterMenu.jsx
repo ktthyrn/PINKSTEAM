@@ -1,6 +1,6 @@
 // src/components/FilterMenu.js
 import React, { useState } from 'react';
-import '../styles/FilterMenu.css'; // Import your CSS styles
+import '../styles/FilterMenu.css'; // Importa tus estilos CSS
 
 const FilterMenu = ({
   tags,
@@ -10,11 +10,21 @@ const FilterMenu = ({
   platforms,
   selectedPlatform,
   onPlatformChange,
+  selectedPriceRange, // Recibe selectedPriceRange como prop para controlar el input
   onPriceChange,
+  selectedPopularity, // AÑADIDO: Prop para la popularidad seleccionada
+  onPopularityChange, // AÑADIDO: Prop para manejar el cambio de popularidad
   onTextFilterChange
 }) => {
   const [dropdownValue, setDropdownValue] = useState('');
-  const [priceRange, setPriceRange] = useState(100);
+  // Usa selectedPriceRange de las props como valor inicial del input de rango de precio
+  const [priceRange, setPriceRange] = useState(selectedPriceRange[1] || 100); 
+
+  // Sincroniza el estado local de priceRange con el prop si cambia desde el padre
+  React.useEffect(() => {
+    setPriceRange(selectedPriceRange[1]);
+  }, [selectedPriceRange]);
+
 
   const handleDropdownChange = (e) => {
     const value = e.target.value;
@@ -27,7 +37,13 @@ const FilterMenu = ({
   const handlePriceRangeChange = (e) => {
     const value = parseInt(e.target.value, 10);
     setPriceRange(value);
-    onPriceChange(0, value); // Always filter from 0 to the selected maximum price
+    onPriceChange(0, value); // Filtra desde 0 hasta el precio máximo seleccionado
+  };
+
+  // Función para manejar el cambio en el filtro de popularidad
+  const handlePopularityDropdownChange = (e) => {
+    const value = parseInt(e.target.value, 10);
+    onPopularityChange(value);
   };
 
   return (
@@ -65,7 +81,7 @@ const FilterMenu = ({
             <span
               key={tag}
               className="selected-tag"
-              onClick={() => onTagSelection(tag)} // Remove tag on click
+              onClick={() => onTagSelection(tag)} // Quitar etiqueta al hacer click
             >
               {tag} ✕
             </span>
@@ -107,6 +123,24 @@ const FilterMenu = ({
         </div>
       </div>
 
+      {/* Popularity Filter Section - AÑADIDO */}
+      <div className="filter-section">
+        <h4>Popularidad</h4>
+        <select
+          value={selectedPopularity}
+          onChange={handlePopularityDropdownChange}
+          className="popularity-dropdown"
+        >
+          <option value="0">Cualquiera</option>
+          <option value="1">★☆☆☆☆ (1 estrella)</option>
+          <option value="2">★★☆☆☆ (2 estrellas)</option>
+          <option value="3">★★★☆☆ (3 estrellas)</option>
+          <option value="4">★★★★☆ (4 estrellas)</option>
+          <option value="5">★★★★★ (5 estrellas)</option>
+        </select>
+      </div>
+
+
       {/* Clear Filters Button */}
       <button className="clear-filters-button" onClick={onClearFilters}>
         Limpiar Filtros
@@ -115,11 +149,16 @@ const FilterMenu = ({
   );
 };
 
+// AÑADIDO: Default props para las nuevas propiedades y las existentes
 FilterMenu.defaultProps = {
   tags: [],
   platforms: [],
   selectedTags: [],
   selectedPlatform: '',
+  selectedPriceRange: [0, 100], // Asegura un valor por defecto si no se pasa
+  selectedPopularity: 0, // Valor por defecto
+  onPopularityChange: () => {}, // Función vacía por defecto
+  onTextFilterChange: () => {} // Función vacía por defecto
 };
 
 export default FilterMenu;
