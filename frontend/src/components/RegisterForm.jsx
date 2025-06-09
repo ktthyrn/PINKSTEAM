@@ -1,6 +1,7 @@
 // src/components/RegisterForm.jsx
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext'; // CAMBIO: de context a contexts
+import axios from 'axios';
 import './../styles/auth.css';
 
 const RegisterForm = () => {
@@ -20,15 +21,20 @@ const RegisterForm = () => {
             return;
         }
 
-        try {
-            await new Promise(resolve => setTimeout(resolve, 1000));
+        if (!email || !password) {
+            setError('Todos los campos son obligatorios.');
+            return;
+        }
 
-            console.log('Simulando registro exitoso para:', email);
+        try {
+            const response = await axios.post('http://localhost:5000/api/auth/register', { email, password });
+            console.log('Registro exitoso!');
+            alert('Usuario registrado con éxito.');
             login({ email: email, username: 'NuevoUsuario' });
 
         } catch (err) {
-            setError('Error al registrar usuario. Inténtalo de nuevo.');
-            console.error('Error de registro:', err);
+            setError('Error al registrar el usuario.');
+            console.error('Error durante el registro:', err);
         }
     };
 

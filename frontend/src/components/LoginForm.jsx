@@ -1,8 +1,9 @@
 // src/components/LoginForm.jsx
 import React, { useState, useContext } from 'react'; // Importa useContext
+import axios from 'axios';
 
 import { AuthContext } from '../contexts/AuthContext'; // Importa AuthContext
-import './../styles/auth.css'; // Asegúrate de que esta ruta sea correcta para tus estilos de formularios
+import '../styles/auth.css'; // Asegúrate de que esta ruta sea correcta para tus estilos de formularios
 
 const LoginForm = () => { // Quita { onLoginSuccess } de la declaración de props del componente
     const [email, setEmail] = useState('');
@@ -26,26 +27,11 @@ const LoginForm = () => { // Quita { onLoginSuccess } de la declaración de prop
         // Aquí es donde harías la llamada a tu API/backend para autenticar al usuario.
         // Por ahora, usamos una lógica simulada para que puedas probar la funcionalidad.
         try {
-            // Simular un retraso de red o una operación de backend (ej. una petición fetch)
-            await new Promise(resolve => setTimeout(resolve, 1000)); // Espera 1 segundo
-
-            // *** REEMPLAZA ESTA LÓGICA CON TU CONEXIÓN REAL AL BACKEND ***
-            // Ejemplo de validación simulada:
-            if (email === 'test@example.com' && password === 'password123') {
-                console.log('Inicio de sesión exitoso!');
-                // Llama a la función 'login' del AuthContext para actualizar el estado global
-                // Puedes pasar datos del usuario que obtengas de tu backend si lo deseas.
-                login({ email: email, username: 'TestUser' }); // Ejemplo: pasa el email y un nombre de usuario
-                // La redirección a la página principal ahora será manejada por LoginPage
-                // a través de un useEffect que reacciona al cambio en el estado de isLoggedIn del AuthContext.
-            } else {
-                // Si las credenciales no coinciden con las simuladas
-                setError('Correo electrónico o contraseña incorrectos.');
-                console.log('Intento de inicio de sesión fallido.');
-            }
+            const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+            login(response.data.user); // Update global auth state
+            console.log('Inicio de sesión exitoso!');
         } catch (err) {
-            // Manejo de errores si la llamada al backend falla (ej. problemas de red, servidor caído)
-            setError('Ocurrió un error al intentar iniciar sesión. Por favor, inténtalo de nuevo más tarde.');
+            setError('Correo electrónico o contraseña incorrectos.');
             console.error('Error durante el inicio de sesión:', err);
         }
     };
