@@ -28,3 +28,6 @@ logs/
 
 # Test coverage
 coverage/
+
+#data importing
+/BACKEND/data_import

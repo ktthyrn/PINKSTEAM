@@ -6,38 +6,45 @@ const jwt = require('jsonwebtoken');     // Para generar y verificar JSON Web To
 
 // Controlador para el registro de nuevos usuarios
 exports.register = async (req, res) => {
-    const { username, email, password } = req.body;
+    const { name, email, password } = req.body;
 
     // Validación básica de entrada
-    if (!username || !email || !password) {
+    console.log(req.body); // Para depurar y ver qué datos se están recibiendo
+    console.log(name, email, password); // Verifica los valores recibidos
+    if (!name || !email || !password) {
+        console.log("Error en el registro: Campos vacíos");
         return res.status(400).json({ message: 'Todos los campos son obligatorios.' });
     }
 
     try {
         // 1. Verificar si el nombre de usuario o el email ya existen en la base de datos
-        const existingUserQuery = 'SELECT * FROM users WHERE username = $1 OR email = $2';
-        const [existingUserRows] = await pool.query(existingUserQuery, [username, email]);
+        console.log("Verificando si el usuario ya existe...");
+        const existingUserQuery = 'SELECT * FROM users WHERE name = $1 OR email = $2';
+        const resultExisting = await pool.query(existingUserQuery, [name, email]);
+        const existingUserRows = resultExisting.rows;
+        console.log("Usuarios existentes encontrados:", existingUserRows.length);
         if (existingUserRows.length > 0) {
+            console.log("Error en el registro: Usuario o email ya en uso");
             return res.status(409).json({ message: 'El nombre de usuario o correo electrónico ya está en uso.' });
         }
 
         // 2. Hashear la contraseña de forma segura
-        // bcrypt genera un "salt" (cadena aleatoria) y lo usa para hashear la contraseña.
-        // Esto asegura que contraseñas idénticas tengan hashes diferentes.
+        console.log("Hasheando la contraseña...");
         const salt = await bcrypt.genSalt(10); // Genera un salt con 10 rondas de hashing
         const passwordHash = await bcrypt.hash(password, salt); // Hashea la contraseña
 
         // 3. Insertar el nuevo usuario en la base de datos
-        const insertUserQuery = 'INSERT INTO users (username, email, password_hash) VALUES ($1, $2, $3) RETURNING id';
-        const [result] = await pool.query(insertUserQuery, [username, email, passwordHash]);
+        console.log("Insertando nuevo usuario en la base de datos...");
+        const insertUserQuery = 'INSERT INTO users (name, email, password_hash) VALUES ($1, $2, $3) RETURNING user_id';
+        const resultInsert = await pool.query(insertUserQuery, [name, email, passwordHash]);
+        const userId = resultInsert.rows[0]?.user_id;
 
         // 4. Generar un JSON Web Token (JWT) para el usuario recién registrado
-        // El JWT contiene un payload (carga útil) con información del usuario (aquí, solo el ID).
-        // Se firma con una clave secreta (JWT_SECRET) para asegurar su autenticidad.
+        console.log("Generando token JWT para el usuario...");
         const token = jwt.sign(
-            { id: result.insertId }, // Payload del token: el ID del usuario insertado
-            process.env.JWT_SECRET,  // Clave secreta definida en tu archivo .env
-            { expiresIn: '1h' }       // El token expirará en 1 hora
+            { id: userId },
+            process.env.JWT_SECRET,
+            { expiresIn: '1h' }
         );
 
         // 5. Enviar respuesta de éxito al cliente
@@ -53,17 +60,18 @@ exports.register = async (req, res) => {
 
 // Controlador para el inicio de sesión de usuarios
 exports.login = async (req, res) => {
-    const { username, password } = req.body;
+    const { name, password } = req.body;
 
     // Validación básica de entrada
-    if (!username || !password) {
+    if (!name || !password) {
         return res.status(400).json({ message: 'Nombre de usuario y contraseña son obligatorios.' });
     }
 
     try {
         // 1. Buscar el usuario en la base de datos por nombre de usuario
-        const fetchUserQuery = 'SELECT * FROM users WHERE username = $1';
-        const [userRows] = await pool.query(fetchUserQuery, [username]);
+        const fetchUserQuery = 'SELECT * FROM users WHERE name = $1';
+        const resultFetch = await pool.query(fetchUserQuery, [name]);
+        const userRows = resultFetch.rows;
         const user = userRows[0]; // El primer (y único) resultado
 
         if (!user) {
@@ -78,16 +86,16 @@ exports.login = async (req, res) => {
 
         // 3. Generar un JSON Web Token (JWT) para el usuario logueado
         const token = jwt.sign(
-            { id: user.id },       // Payload del token: el ID del usuario
-            process.env.JWT_SECRET,  // Clave secreta
-            { expiresIn: '1h' }       // El token expirará en 1 hora
+            { id: user.user_id },
+            process.env.JWT_SECRET,
+            { expiresIn: '1h' }
         );
 
         // 4. Enviar respuesta de éxito al cliente con el token y datos básicos del usuario
         res.status(200).json({
             message: 'Inicio de sesión exitoso.',
             token,
-            user: { id: user.id, username: user.username, email: user.email }
+            user: { id: user.user_id, name: user.name, email: user.email }
         });
 
     } catch (error) {

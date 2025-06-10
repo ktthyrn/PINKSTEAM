@@ -8,6 +8,7 @@ const RegisterForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [name, setUsername] = useState('');
     const [error, setError] = useState('');
 
     const { login } = useContext(AuthContext);
@@ -21,17 +22,17 @@ const RegisterForm = () => {
             return;
         }
 
-        if (!email || !password) {
+        if (!name || !email || !password) {
             setError('Todos los campos son obligatorios.');
             return;
         }
 
         try {
-            const response = await axios.post('http://localhost:5000/api/auth/register', { email, password });
+            console.log('Intentando registrar usuario:', { name, email, password });
+            const response = await axios.post('http://localhost:5000/api/auth/register', { name, email, password });
             console.log('Registro exitoso!');
             alert('Usuario registrado con éxito.');
-            login({ email: email, username: 'NuevoUsuario' });
-
+            login({ email: email, name });
         } catch (err) {
             setError('Error al registrar el usuario.');
             console.error('Error durante el registro:', err);
@@ -43,6 +44,16 @@ const RegisterForm = () => {
             <h2 className="form-title">Registrarse</h2>
             {error && <p className="error-message">{error}</p>}
 
+            <div className="input-group">
+                <label htmlFor="register-username">Nombre de usuario</label>
+                <input
+                    type="text"
+                    id="register-username"
+                    value={name}
+                    onChange={(e) => setUsername(e.target.value)}
+                    required
+                />
+            </div>
             <div className="input-group">
                 <label htmlFor="register-email">Correo electrónico</label>
                 <input

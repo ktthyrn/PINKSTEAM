@@ -1,3 +1,4 @@
+console.log("Reached top of App.js");
 // backend/src/app.js
 
 // Carga las variables de entorno desde el archivo .env.
@@ -36,7 +37,7 @@ app.use('/api/auth', authRoutes);
 // --- Ruta de Prueba ---
 // Una ruta simple para verificar que el servidor está funcionando.
 app.get('/', (req, res) => {
-    res.send('Backend de React y MySQL funcionando!');
+    res.send('Backend de React y PostgreSQL funcionando!');
 });
 
 // --- Inicio del Servidor ---
