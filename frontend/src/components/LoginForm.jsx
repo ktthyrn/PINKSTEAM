@@ -6,7 +6,7 @@ import { AuthContext } from '../contexts/AuthContext'; // Importa AuthContext
 import '../styles/auth.css'; // Asegúrate de que esta ruta sea correcta para tus estilos de formularios
 
 const LoginForm = () => { // Quita { onLoginSuccess } de la declaración de props del componente
-    const [email, setEmail] = useState('');
+    const [name, setName] = useState(''); // Usar 'name' en vez de 'email'
     const [password, setPassword] = useState('');
     const [error, setError] = useState(''); // Estado para mostrar mensajes de error al usuario
 
@@ -18,7 +18,7 @@ const LoginForm = () => { // Quita { onLoginSuccess } de la declaración de prop
         setError(''); // Limpiar cualquier mensaje de error anterior
 
         // Validación básica de campos vacíos
-        if (!email || !password) {
+        if (!name || !password) {
             setError('Todos los campos son obligatorios.');
             return; // Detiene la ejecución si los campos están vacíos
         }
@@ -27,11 +27,11 @@ const LoginForm = () => { // Quita { onLoginSuccess } de la declaración de prop
         // Aquí es donde harías la llamada a tu API/backend para autenticar al usuario.
         // Por ahora, usamos una lógica simulada para que puedas probar la funcionalidad.
         try {
-            const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+            const response = await axios.post('http://localhost:5000/api/auth/login', { name, password });
             login(response.data.user); // Update global auth state
             console.log('Inicio de sesión exitoso!');
         } catch (err) {
-            setError('Correo electrónico o contraseña incorrectos.');
+            setError('Nombre de usuario o contraseña incorrectos.');
             console.error('Error durante el inicio de sesión:', err);
         }
     };
@@ -43,14 +43,14 @@ const LoginForm = () => { // Quita { onLoginSuccess } de la declaración de prop
             {error && <p className="error-message">{error}</p>}
 
             <div className="input-group">
-                <label htmlFor="email">Correo electrónico</label> {/* Etiqueta para accesibilidad */}
+                <label htmlFor="name">Nombre de usuario</label>
                 <input
-                    type="email"
-                    id="email" // ID único para el input
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Tu correo electrónico" // Placeholder más descriptivo
-                    required // Hace que el campo sea obligatorio
+                    type="text"
+                    id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Tu nombre de usuario"
+                    required
                 />
             </div>
             <div className="input-group">

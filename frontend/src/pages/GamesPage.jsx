@@ -18,7 +18,7 @@ const GamesPage = () => {
   useEffect(() => {
     const fetchGames = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/games');
+        const response = await axios.get('http://localhost:5000/api/auth/games');
         setGames(response.data);
       } catch (error) {
         console.error('Error fetching games:', error);
@@ -63,16 +63,36 @@ const GamesPage = () => {
 
   // Lógica de filtrado
   const filteredGames = games.filter((game) =>
-    (selectedTags.length === 0 || selectedTags.every((tag) => game.tags.includes(tag))) &&
-    (selectedPlatform === '' || game.platform.includes(selectedPlatform)) &&
+    (selectedTags.length === 0 || selectedTags.every((tag) => Array.isArray(game.tags) ? game.tags.includes(tag) : false)) &&
+    (selectedPlatform === '' || (typeof game.platform === 'string' ? game.platform.includes(selectedPlatform) : false)) &&
     (game.price >= selectedPriceRange[0] && game.price <= selectedPriceRange[1]) &&
     (selectedPopularity === 0 || game.popularity === selectedPopularity) &&
-    (textFilter === "" || game.title.toLowerCase().includes(textFilter))
+    (textFilter === "" || (typeof (game.title || game.name) === 'string' && (game.title || game.name).toLowerCase().includes(textFilter)))
   );
 
   // Extracción de tags y plataformas únicas para los filtros
-  const allTags = [...new Set(games.flatMap((game) => game.tags))];
-  const allPlatforms = [...new Set(games.flatMap((game) => game.platform.split(', ')))];
+  const allTags = [
+    ...new Set(
+      games.flatMap((game) =>
+        Array.isArray(game.tags)
+          ? game.tags
+          : typeof game.tags === 'string'
+            ? game.tags.split(',').map(t => t.trim())
+            : []
+      )
+    )
+  ];
+  const allPlatforms = [
+    ...new Set(
+      games.flatMap((game) =>
+        typeof game.platform === 'string'
+          ? game.platform.split(',').map(p => p.trim())
+          : Array.isArray(game.platform)
+            ? game.platform
+            : []
+      )
+    )
+  ];
 
   return (
     <div className="game-list-page">

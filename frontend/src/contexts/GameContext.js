@@ -21,7 +21,13 @@ export const GameProvider = ({ children }) => {
         setError(null);
         try {
           const res = await axios.get(`http://localhost:5000/api/auth/games/user/${user.id}`);
-          setLibrary(res.data);
+          // Map backend fields to frontend standard: id, title, image
+          setLibrary(res.data.map(game => ({
+            id: game.game_id,
+            title: game.name,
+            image: game.thumbnail || game.thumbnail_image || game.image,
+            ...game
+          })));
         } catch (err) {
           setError('Error fetching user library');
         } finally {
@@ -41,7 +47,12 @@ export const GameProvider = ({ children }) => {
       await axios.post(`http://localhost:5000/api/auth/games/user/${user.id}/add`, { game_id: gameId });
       // Refetch library after add
       const res = await axios.get(`http://localhost:5000/api/auth/games/user/${user.id}`);
-      setLibrary(res.data);
+      setLibrary(res.data.map(game => ({
+        id: game.game_id,
+        title: game.name,
+        image: game.thumbnail || game.thumbnail_image || game.image,
+        ...game
+      })));
     } catch (err) {
       setError('Error adding game to library');
     }
@@ -54,7 +65,12 @@ export const GameProvider = ({ children }) => {
       await axios.post(`http://localhost:5000/api/auth/games/user/${user.id}/remove`, { game_id: gameId });
       // Refetch library after remove
       const res = await axios.get(`http://localhost:5000/api/auth/games/user/${user.id}`);
-      setLibrary(res.data);
+      setLibrary(res.data.map(game => ({
+        id: game.game_id,
+        title: game.name,
+        image: game.thumbnail || game.thumbnail_image || game.image,
+        ...game
+      })));
     } catch (err) {
       setError('Error removing game from library');
     }

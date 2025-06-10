@@ -2,12 +2,42 @@ const express = require('express');
 const router = express.Router();
 const { pool } = require('../config/db');
 
-// Get all games
+// Get all games with associated tags
 router.get('/', async (req, res) => {
     try {
-        const result = await pool.query('SELECT * FROM games');
+        const result = await pool.query(`
+            SELECT
+                g.game_id,
+                g.name,
+                g.type AS genre, -- Aliamos 'type' a 'genre' para que coincida con el frontend
+                g.rating,
+                g.price,
+                g.popularity,
+                g.release_year,
+                g.thumbnail_image, -- Asegúrate de que esta sea la columna correcta para la imagen
+                g.developer,
+                g.description,
+                g.release_date,
+                -- Agregamos las etiquetas (tags) como un array JSON
+                COALESCE(
+                    JSON_AGG(l.label_name) FILTER (WHERE l.label_name IS NOT NULL),
+                    '[]'
+                ) AS tags
+            FROM
+                games g
+            LEFT JOIN
+                game_labels gl ON g.game_id = gl.game_id
+            LEFT JOIN
+                labels l ON gl.label_id = l.label_id
+            GROUP BY
+                g.game_id, g.name, g.type, g.rating, g.price, g.popularity, g.release_year,
+                g.thumbnail_image, g.developer, g.description, g.release_date
+            ORDER BY
+                g.game_id;
+        `);
         res.json(result.rows);
     } catch (err) {
+        console.error('Error fetching games with tags:', err); // Agregamos un log para depuración
         res.status(500).json({ error: 'Error fetching games' });
     }
 });

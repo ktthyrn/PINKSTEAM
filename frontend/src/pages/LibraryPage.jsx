@@ -8,10 +8,10 @@ const LibraryPage = () => {
     const { library, loading, error } = useContext(GameContext);
 
     const handleDownloadClick = (gameId) => {
-        const gameToDownload = library.find(game => game.game_id === gameId || game.id === gameId);
+        const gameToDownload = library.find(game => game.id === gameId);
         if (gameToDownload) {
-            alert(`¡Iniciando la descarga/juego de "${gameToDownload.name || gameToDownload.title}"!`);
-            console.log(`Descargando/jugando: ${gameToDownload.name || gameToDownload.title} (ID: ${gameId})`);
+            alert(`¡Iniciando la descarga/juego de "${gameToDownload.title}"!`);
+            console.log(`Descargando/jugando: ${gameToDownload.title} (ID: ${gameId})`);
         }
     };
 
@@ -31,13 +31,8 @@ const LibraryPage = () => {
                     <div className="library-games-list">
                         {library.map(game => (
                             <LibraryGameItem
-                                key={game.game_id || game.id}
-                                game={{
-                                    id: game.game_id || game.id,
-                                    title: game.name || game.title,
-                                    image: game.thumbnail_image || game.image,
-                                    ...game
-                                }}
+                                key={game.id}
+                                game={game}
                                 onDownloadClick={handleDownloadClick}
                             />
                         ))}

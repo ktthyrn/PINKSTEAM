@@ -2,6 +2,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { GameContext } from '../contexts/GameContext';
+import axios from 'axios';
 import '../styles/gameDetailPage.css';
 
 export const GameDetailPage = () => {
@@ -10,28 +11,47 @@ export const GameDetailPage = () => {
     const { library, addToLibrary, removeFromLibrary, loading } = useContext(GameContext);
     const [game, setGame] = useState(null);
     const [isAddedToLibrary, setIsAddedToLibrary] = useState(false);
+    const [allGames, setAllGames] = useState([]);
+
+    console.log('GameDetailPage render', { id, library, allGames, game, isAddedToLibrary, loading });
+
+    useEffect(() => {
+        // Cargar todos los juegos al montar el componente
+        console.log('GameDetailPage useEffect: fetching all games');
+        const fetchAllGames = async () => {
+            try {
+                console.log('fetchAllGames: calling API');
+                const res = await axios.get('http://localhost:5000/api/auth/games');
+                console.log('fetchAllGames response', res.data);
+                const mappedGames = res.data.map(game => ({
+                    id: game.game_id,
+                    title: game.name,
+                    image: game.thumbnail_image || game.image ||game.thumbnail ,
+                    tags: game.tags ? (Array.isArray(game.tags) ? game.tags : (typeof game.tags === 'string' ? game.tags.split(',').map(t => t.trim()) : []) ) : [],
+                    ...game
+                }));
+                console.log('fetchAllGames: mappedGames', mappedGames);
+                setAllGames(mappedGames);
+            } catch (err) {
+                console.error('fetchAllGames error', err);
+                setAllGames([]);
+            }
+        };
+        fetchAllGames();
+    }, []);
 
     useEffect(() => {
         const gameIdNum = parseInt(id);
-        // Try to find the game in the user's library first
-        let foundGame = library.find(g => (g.game_id || g.id) === gameIdNum);
-        if (!foundGame && library.length > 0) {
-            // If not found, try to fetch from backend (optional: you could fetch all games from backend if needed)
-            // For now, just show not found
-            setGame(null);
-            setIsAddedToLibrary(false);
-            return;
-        }
-        setGame({
-            id: foundGame.game_id || foundGame.id,
-            title: foundGame.name || foundGame.title,
-            image: foundGame.thumbnail_image || foundGame.image,
-            ...foundGame
-        });
-        setIsAddedToLibrary(true);
-    }, [id, library]);
+        console.log('useEffect [id, library, allGames]', { id, gameIdNum, library, allGames });
+        // Buscar primero en la biblioteca, si no está, buscar en todos los juegos
+        let foundGame = library.find(g => g.id === gameIdNum) || allGames.find(g => g.id === gameIdNum);
+        console.log('Found game:', foundGame);
+        setGame(foundGame || null);
+        setIsAddedToLibrary(!!library.find(g => g.id === gameIdNum));
+    }, [id, library, allGames]);
 
     const handleDownloadOrAddToLibrary = async () => {
+        console.log('handleDownloadOrAddToLibrary', { game, isAddedToLibrary });
         if (!game) return;
         if (!isAddedToLibrary) {
             await addToLibrary(game.id);
@@ -44,8 +64,21 @@ export const GameDetailPage = () => {
         }
     };
 
-    if (loading) return <div className="game-detail-container loading">Cargando detalles del juego...</div>;
-    if (!game) return <div className="game-detail-container loading">Juego no encontrado en tu biblioteca.</div>;
+    if (loading) {
+        console.log('Loading...');
+        return <div className="game-detail-container loading">Cargando detalles del juego...</div>;
+    }
+    if (!game) {
+        console.log('No game found for id', id);
+        return (
+            <div className="game-detail-container loading">
+                Juego no encontrado en tu biblioteca.<br/>
+                <button className="btn" onClick={() => navigate('/games')}>Ver todos los juegos</button>
+            </div>
+        );
+    }
+
+    console.log('Rendering game details', game);
 
     return (
         <div className="game-detail-container">
@@ -58,7 +91,7 @@ export const GameDetailPage = () => {
             <div className="game-content-layout">
                 <div className="top-section">
                     <div className="game-media">
-                        <img src={game.image} alt={game.title} className="game-main-image" />
+                        <img src={`/games/${game.thumbnail_image}.jpg` || '/default-game.jpg' || game.image } alt={game.title} className="game-main-image" />
                     </div>
                     <div className="game-actions">
                         <button

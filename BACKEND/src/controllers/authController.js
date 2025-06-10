@@ -37,6 +37,7 @@ exports.register = async (req, res) => {
         console.log("Insertando nuevo usuario en la base de datos...");
         const insertUserQuery = 'INSERT INTO users (name, email, password_hash) VALUES ($1, $2, $3) RETURNING user_id';
         const resultInsert = await pool.query(insertUserQuery, [name, email, passwordHash]);
+        console.log("Usuario insertado con éxito:", resultInsert.rows[0]?.user_id);
         const userId = resultInsert.rows[0]?.user_id;
 
         // 4. Generar un JSON Web Token (JWT) para el usuario recién registrado

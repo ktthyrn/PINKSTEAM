@@ -14,26 +14,37 @@ function GameList({ games }) {
 
   return (
     <div className="game-list-container">
-      {games.map((game, index) => (
-        game && game.title ? (
-          <div key={game.id || index} className="game-list-item">
-            {game.thumbnail && (
-              <img src={game.thumbnail} alt={`${game.title} Thumbnail`} className="game-list-item-thumbnail" />
-            )}
-            <div className="game-list-item-details">
-              <h3 className="game-list-item-title">{game.title}</h3>
-              <p><strong>Etiquetas:</strong> {game.tags.join(', ')}</p>
-              <p><strong>Precio:</strong> ${game.price?.toFixed(2) || 'N/A'}</p>
-              <p><strong>Popularidad:</strong> {game.popularity || 'N/A'} / 5</p>
-              <p><strong>Año de lanzamiento:</strong> {game.releaseYear || 'N/A'}</p>
+      {games.map((game, index) => {
+        // Debug: log each game object
+        console.log('GameList item:', game);
+        if (game && (game.title || game.name)) {
+          const title = game.title || game.name;
+          const image = game.image || `/games/${game.thumbnail_image || game.thumbnail}.jpg` || '/default-game.jpg';
+          return (
+            <div key={game.id || game.game_id || index} className="game-list-item">
+              <img
+                src={image}
+                alt={`${title} Thumbnail`}
+                className="game-list-item-thumbnail"
+              />
+              <div className="game-list-item-details">
+                <h3 className="game-list-item-title">{title}</h3>
+                <p><strong>Etiquetas:</strong> {Array.isArray(game.tags) ? game.tags.join(', ') : ''}</p>
+                <p><strong>Precio:</strong> ${game.price ? Number(game.price).toFixed(2) : 'N/A'}</p>
+                <p><strong>Popularidad:</strong> {game.popularity || 'N/A'} / 5</p>
+                <p><strong>Año de lanzamiento:</strong> {game.releaseYear || game.release_year || 'N/A'}</p>
+              </div>
             </div>
-          </div>
-        ) : (
-          <div key={index} className="game-list-item">
-            <p>Invalid game data</p>
-          </div>
-        )
-      ))}
+          );
+        } else {
+          return (
+            <div key={index} className="game-list-item">
+              <p>Invalid game data</p>
+              <pre>{JSON.stringify(game, null, 2)}</pre>
+            </div>
+          );
+        }
+      })}
     </div>
   );
 }
