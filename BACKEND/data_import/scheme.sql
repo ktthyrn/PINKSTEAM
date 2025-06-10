@@ -6,6 +6,8 @@ CREATE TABLE users (
     user_id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL
+    registration_date DATE DEFAULT CURRENT_DATE,
+    password_hash VARCHAR(255) NOT NULL,
 );
 
 -- 2. Tabla de Juegos
@@ -17,7 +19,10 @@ CREATE TABLE games (
     price NUMERIC(10,2),
     popularity INTEGER,
     release_year INTEGER,
-    thumbnail VARCHAR(255)
+    thumbnail_image VARCHAR(255)
+    developer VARCHAR(255), -- Considerar una tabla 'developers' si hay muchos desarrolladores únicos
+    description TEXT,
+    release_date DATE,
 );
 
 -- 3. Tabla de Etiquetas (lo que antes llamabas Géneros/Temáticas en el otro set)

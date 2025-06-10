@@ -62,7 +62,7 @@ exports.register = async (req, res) => {
 // Controlador para el inicio de sesión de usuarios
 exports.login = async (req, res) => {
     const { name, password } = req.body;
-
+    console.log("Datos de inicio de sesión recibidos:", { name, password });
     // Validación básica de entrada
     if (!name || !password) {
         return res.status(400).json({ message: 'Nombre de usuario y contraseña son obligatorios.' });
@@ -70,8 +70,10 @@ exports.login = async (req, res) => {
 
     try {
         // 1. Buscar el usuario en la base de datos por nombre de usuario
+        console.log("Buscando usuario en la base de datos...");
         const fetchUserQuery = 'SELECT * FROM users WHERE name = $1';
         const resultFetch = await pool.query(fetchUserQuery, [name]);
+        console.log("Resultados de la búsqueda de usuario:", resultFetch.rows.length);
         const userRows = resultFetch.rows;
         const user = userRows[0]; // El primer (y único) resultado
 
@@ -82,6 +84,7 @@ exports.login = async (req, res) => {
         // 2. Comparar la contraseña proporcionada con la contraseña hasheada en la BD
         const isMatch = await bcrypt.compare(password, user.password_hash);
         if (!isMatch) {
+            console.log("Contraseña incorrecta para el usuario:", name);
             return res.status(401).json({ message: 'Credenciales inválidas.' });
         }
 

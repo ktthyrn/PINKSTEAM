@@ -29,10 +29,11 @@ const RegisterForm = () => {
 
         try {
             console.log('Intentando registrar usuario:', { name, email, password });
-            const response = await axios.post('http://localhost:5000/api/auth/register', { name, email, password });
+            await axios.post('http://localhost:5000/api/auth/register', { name, email, password });
             console.log('Registro exitoso!');
-            alert('Usuario registrado con éxito.');
-            login({ email: email, name });
+            alert('Usuario registrado con éxito. Ahora inicia sesión.');
+            // Redirigir a la página de login o limpiar el formulario
+            window.location.href = '/login';
         } catch (err) {
             setError('Error al registrar el usuario.');
             console.error('Error durante el registro:', err);

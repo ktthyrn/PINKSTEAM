@@ -44,7 +44,7 @@ const Home = () => {
               <button className="btn library" onClick={() => navigate("/library")}>
                 MI BIBLIOTECA
               </button>
-              <span className="welcome-message">Hola, {user ? user.username : 'Usuario'}</span>
+              <span className="welcome-message">Hola, {user ? user.name : 'Usuario'}</span>
               <button className="btn logout" onClick={logout}>
                 Cerrar Sesión
               </button>
