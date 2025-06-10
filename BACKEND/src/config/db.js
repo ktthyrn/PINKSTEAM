@@ -10,22 +10,27 @@ const { Pool } = require('pg');
 // Esto mejora el rendimiento porque no se necesita abrir y cerrar una conexión
 // para cada petición a la base de datos.
 const pool = new Pool({
-    // 'host' es la dirección donde se ejecuta tu servidor PostgreSQL.
+    // 'host' es la dirección donde se ejecuta tu servidor PostgreSQL en Aiven.
     // Utiliza variables de entorno (process.env) para mantener la configuración segura
     // y configurable sin cambiar el código directamente.
-    // Si la variable de entorno no está definida, usa 'localhost' como predeterminado.
-    host: process.env.DB_HOST || 'localhost',
-    // 'user' es el nombre de usuario de PostgreSQL.
-    user: process.env.DB_USER || 'postgres',
-    // 'password' es la contraseña del usuario de PostgreSQL.
-    // ¡IMPORTANTE! Asegúrate de cambiar 'your_postgres_password' por tu contraseña real.
-    // Nunca hardcodes contraseñas en código de producción.
-    password: process.env.DB_PASSWORD || 'your_postgres_password',
-    // 'database' es el nombre de la base de datos a la que tu aplicación se conectará.
-    database: process.env.DB_NAME || 'mi_app_db',
-    // 'port' es el puerto en el que tu servidor PostgreSQL está escuchando.
-    // El puerto predeterminado de PostgreSQL es 5432.
-    port: process.env.DB_PORT || 5432,
+    // Asegúrate de que tu archivo .env tenga las variables AIVEN_PG_HOST, etc.
+    host: process.env.AIVEN_PG_HOST || 'tu_host_aiven.aivencloud.com',
+    // 'user' es el nombre de usuario de PostgreSQL en Aiven.
+    user: process.env.AIVEN_PG_USER || 'avnadmin',
+    // 'password' es la contraseña del usuario de PostgreSQL en Aiven.
+    // ¡IMPORTANTE! Asegúrate de que esta variable esté configurada en tu .env.
+    password: process.env.AIVEN_PG_PASSWORD || 'tu_contraseña_aiven',
+    // 'database' es el nombre de la base de datos a la que tu aplicación se conectará en Aiven.
+    database: process.env.AIVEN_PG_DATABASE || 'defaultdb',
+    // 'port' es el puerto en el que tu servidor PostgreSQL en Aiven está escuchando.
+    port: process.env.AIVEN_PG_PORT || 10814, // El puerto de Aiven suele ser diferente al 5432
+    // 'ssl' es crucial para Aiven, ya que la mayoría de los servicios en la nube requieren SSL/TLS.
+    ssl: {
+        // Rechaza certificados no autorizados, esto es más seguro para producción.
+        // Si tienes problemas de conexión, podrías cambiarlo temporalmente a false
+        // durante la depuración, pero no lo dejes así en producción.
+        rejectUnauthorized: false, 
+    },
     // 'max' es el número máximo de conexiones que el pool puede mantener
     // abiertas al mismo tiempo. Un valor típico es 10 o 20, dependiendo de la carga esperada.
     max: 10,
@@ -39,14 +44,14 @@ async function testDbConnection() {
     try {
         // Intenta obtener una conexión del pool.
         const client = await pool.connect();
-        console.log('Conectado a la base de datos PostgreSQL exitosamente!');
+        console.log('Conectado a la base de datos PostgreSQL en Aiven exitosamente!');
         // Libera el cliente de vuelta al pool inmediatamente después de la prueba.
         // Esto es crucial para no agotar las conexiones disponibles.
         client.release();
     } catch (err) {
         // Si hay un error al conectar, muestra el error y termina la aplicación.
         // Una aplicación backend no puede funcionar sin acceso a su base de datos.
-        console.error('Error al conectar a la base de datos:', err);
+        console.error('Error al conectar a la base de datos en Aiven:', err);
         process.exit(1); // Sale de la aplicación con un código de error
     }
 }

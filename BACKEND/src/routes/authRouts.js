@@ -3,7 +3,6 @@
 const express = require('express');
 const router = express.Router(); // Crea un nuevo router de Express
 const authController = require('../controllers/authController'); // Importa el controlador de autenticación
-const gameRoutes = require('./gameRoutes'); // Import game routes
 
 // Define la ruta POST para el registro de usuarios.
 // Cuando se reciba una petición POST en /api/auth/register,
@@ -19,8 +18,5 @@ router.post('/login', authController.login);
 // Cuando se reciba una petición POST en /api/auth/logout,
 // se ejecutará la función 'logout' del authController.
 router.post('/logout', authController.logout);
-
-// Add game routes
-router.use('/games', gameRoutes);
 
 module.exports = router; // Exporta el router para que app.js pueda usarlo

@@ -122,7 +122,7 @@ async function importCsvToDb(csvFilePath, dbTable, mapping) {
                     // Mapear nombres de columnas del CSV a los de la BD y preparar los valores
                     const dbColumns = Object.values(mapping);
                     const placeholders = dbColumns.map((_, i) => `$${i + 1}`).join(', ');
-                    const insertQuery = `INSERT INTO ${dbTable} (${dbColumns.join(', ')}) VALUES (${placeholders}) ON CONFLICT DO NOTHING`; // Evitar duplicados
+                    const insertQuery = `INSERT INTO ${dbTable} (${dbColumns.join(', ')}) VALUES (${placeholders})`;
 
                     for (const record of records) {
                         const values = dbColumns.map(dbCol => {
@@ -135,34 +135,30 @@ async function importCsvToDb(csvFilePath, dbTable, mapping) {
                                 try {
                                     value = new Date(value).toISOString().split('T')[0];
                                 } catch (e) {
-                                    value = null;
+                                    console.warn(`Advertencia: Fecha inválida '${value}' para ${dbTable}.${dbCol}. Se insertará NULL.`);
+                                    value = null; // O manejar el error de otra forma
                                 }
                             } else if (dbTable === 'games' && (dbCol === 'price' || dbCol === 'popularity') && value) {
                                 value = parseFloat(value);
-                                if (isNaN(value)) value = null;
+                                if (isNaN(value)) {
+                                    console.warn(`Advertencia: Valor numérico inválido '${record[csvCol]}' para ${dbTable}.${dbCol}. Se insertará NULL.`);
+                                    value = null;
+                                }
                             } else if (dbTable === 'users' && dbCol === 'registration_date' && value) {
                                 try {
                                     value = new Date(value).toISOString().split('T')[0];
                                 } catch (e) {
+                                    console.warn(`Advertencia: Fecha inválida '${value}' para ${dbTable}.${dbCol}. Se insertará NULL.`);
                                     value = null;
                                 }
                             }
 
                             return value;
                         });
-                        try {
-                            await client.query(insertQuery, values);
-                        } catch (err) {
-                            // Print conflict info and continue
-                            console.error(`Conflicto al insertar en la tabla '${dbTable}':`, err.message);
-                            console.error('Registro problemático:', record);
-                        }
+
+                        await client.query(insertQuery, values);
                     }
                     console.log(`Importación de '${csvFilePath}' completada exitosamente.`);
-                    // Print the head of the table after import
-                    const headResult = await client.query(`SELECT * FROM ${dbTable} LIMIT 5`);
-                    console.log(`Primeras filas de la tabla '${dbTable}':`);
-                    console.table(headResult.rows);
                     resolve();
                 } catch (error) {
                     console.error(`Error durante la importación de '${csvFilePath}' a '${dbTable}':`, error.message);
@@ -177,36 +173,10 @@ async function importCsvToDb(csvFilePath, dbTable, mapping) {
     });
 }
 
-async function cleanDatabase() {
-    // El orden es importante por las claves foráneas (primero tablas de unión, luego padres)
-    const tables = [
-        'game_owners',
-        'game_play_modes',
-        'game_platforms',
-        'game_labels',
-        'games',
-        'labels',
-        'platforms',
-        'play_modes',
-        'users'
-    ];
-    for (const table of tables) {
-        try {
-            await client.query(`TRUNCATE TABLE ${table} RESTART IDENTITY CASCADE`);
-            console.log(`Tabla '${table}' limpiada.`);
-        } catch (err) {
-            console.error(`Error al limpiar la tabla '${table}':`, err.message);
-        }
-    }
-}
-
 async function runImport() {
     try {
         await client.connect();
         console.log('Conexión a la base de datos PostgreSQL establecida.');
-
-        // Limpiar todas las tablas antes de importar
-        await cleanDatabase();
 
         // ORDEN DE IMPORTACIÓN CRÍTICO para respetar las claves foráneas
         // Primero tablas "padre"
