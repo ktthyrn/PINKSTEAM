@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/PINKSTEAM/static/css/main.f893d17b.css",
+    "main.js": "/PINKSTEAM/static/js/main.f9c0fd67.js",
+    "index.html": "/PINKSTEAM/index.html",
+    "main.f893d17b.css.map": "/PINKSTEAM/static/css/main.f893d17b.css.map",
+    "main.f9c0fd67.js.map": "/PINKSTEAM/static/js/main.f9c0fd67.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f893d17b.css",
+    "static/js/main.f9c0fd67.js"
+  ]
+}
