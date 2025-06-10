@@ -28,7 +28,7 @@ const LoginForm = () => { // Quita { onLoginSuccess } de la declaración de prop
         // Por ahora, usamos una lógica simulada para que puedas probar la funcionalidad.
         try {
             console.log('Intentando iniciar sesión con:', { name, password });
-            const response = await axios.post('http://localhost:5000/api/auth/login', { name, password });
+            const response = await axios.post('https://pinksteam-production.up.railway.app/api/auth/login', { name, password });
             console.log('Respuesta del servidor:', response.data);
             login(response.data.user); // Update global auth state
             console.log('Inicio de sesión exitoso!');
