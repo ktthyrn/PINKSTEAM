@@ -1,0 +1,16 @@
+game_id;nombre;desarrollador;descripcion;precio;fecha_lanzamiento;popularidad;mini_imagen
+1;The Witcher 3;CD Projekt Red;Juego de prueba;64.05;2010-12-31;2;witcher
+2;Doom Eternal;id Software;Juego de prueba;43.11;2011-12-31;4.5;doom
+3;Cyberpunk 2077;CD Projekt Red;Juego de prueba;12.16;2012-12-31;5;cyberpunk
+4;Minecraft;Mojang Studios;Juego de prueba;33.08;2013-12-31;3.2;minecraft
+5;Overwatch;Blizzard Entertainment;Juego de prueba;17.21;2014-12-31;2.8;overwatch
+6;Hades;Supergiant Games;Juego de prueba;42.29;2015-12-31;2.9;hades
+7;Celeste;Maddy Makes Games;Juego de prueba;43.09;2016-12-31;3.8;celeste
+8;Hollow Knight;Team Cherry;Juego de prueba;39.22;2017-12-31;4.7;hollowknight
+9;God of War;Santa Monica Studio;Juego de prueba;18.53;2018-12-31;2.2;godofwar
+10;Red Dead Redemption 2;Rockstar Studios;Juego de prueba;60.47;2019-12-31;4.7;reddead2
+11;Stardew Valley;ConcernedApe;Juego de prueba;53.48;2020-12-31;3.9;stardew
+12;Valorant;Riot Games;Juego de prueba;60.28;2021-12-31;3.9;valorant
+13;Apex Legends;Respawn Entertainment;Juego de prueba;43.4;2022-12-31;2.6;apex
+14;Elden Ring;FromSoftware;Juego de prueba;63.27;2023-12-31;4.5;eldenring
+15;Terraria;Re-Logic;Juego de prueba;57.95;2024-12-31;4.4;terraria

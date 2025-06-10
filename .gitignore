@@ -30,4 +30,4 @@ logs/
 coverage/
 
 #data importing
-/BACKEND/data_import
+#/BACKEND/data_import
