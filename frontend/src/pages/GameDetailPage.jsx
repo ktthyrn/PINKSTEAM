@@ -45,7 +45,13 @@ export const GameDetailPage = () => {
         console.log('useEffect [id, library, allGames]', { id, gameIdNum, library, allGames });
         // Buscar primero en la biblioteca, si no está, buscar en todos los juegos
         let foundGame = library.find(g => g.id === gameIdNum) || allGames.find(g => g.id === gameIdNum);
-        console.log('Found game:', foundGame);
+        // Si el juego de la biblioteca no tiene tags, intenta encontrarlos en allGames
+        if (foundGame && (!foundGame.tags || foundGame.tags.length === 0)) {
+            const fromAll = allGames.find(g => g.id === gameIdNum);
+            if (fromAll && fromAll.tags && fromAll.tags.length > 0) {
+                foundGame = { ...foundGame, tags: fromAll.tags };
+            }
+        }
         setGame(foundGame || null);
         setIsAddedToLibrary(!!library.find(g => g.id === gameIdNum));
     }, [id, library, allGames]);
@@ -106,9 +112,15 @@ export const GameDetailPage = () => {
                     <h2 className="section-subtitle">Acerca de este juego</h2>
                     <p className="game-description">{game.description || "Descripción no disponible."}</p>
                     <div className="game-info-blocks">
-                        <p><strong>Género:</strong> {game.genre || "No disponible"}</p>
                         <p><strong>Desarrollador:</strong> {game.developer || "No disponible"}</p>
-                        <p><strong>Fecha de lanzamiento:</strong> {game.releaseDate || game.release_date || "No disponible"}</p>
+                        <p><strong>Fecha de lanzamiento:</strong> {(() => {
+  const dateStr = game.releaseDate || game.release_date;
+  if (!dateStr) return "No disponible";
+  const d = new Date(dateStr);
+  if (isNaN(d)) return "No disponible";
+  // Formato: YYYY-MM
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+})()}</p>
                     </div>
                     <div className="game-tags">
                         {game.tags && game.tags.length > 0 ? (

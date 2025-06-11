@@ -53,6 +53,7 @@ export const GameProvider = ({ children }) => {
         id: game.game_id,
         title: game.name,
         image: game.thumbnail_image ? `${process.env.PUBLIC_URL}/games/${game.thumbnail_image}.jpg` : '',
+        tags: Array.isArray(game.tags) ? game.tags : (typeof game.tags === 'string' ? game.tags.split(',').map(t => t.trim()) : []),
         ...game
       }));
       setLibrary(mapped);
@@ -73,6 +74,7 @@ export const GameProvider = ({ children }) => {
         id: game.game_id,
         title: game.name,
         image: game.thumbnail_image ? `${process.env.PUBLIC_URL}/games/${game.thumbnail_image}.jpg` : '',
+        tags: Array.isArray(game.tags) ? game.tags : (typeof game.tags === 'string' ? game.tags.split(',').map(t => t.trim()) : []),
         ...game
       }));
       setLibrary(mapped);
