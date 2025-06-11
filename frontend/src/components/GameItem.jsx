@@ -15,7 +15,7 @@ export const GameItem = ({ game, showDownloadButton = false }) => {
 
   return (
     <div className="game-card"> {/* Reutiliza tu clase game-card */}
-      <img src={`${process.env.PUBLIC_URL}/games/${game.thumbnail_image}.jpg`|| '/default-game.jpg'} alt={game.title} className="game-image" />
+      <img src={`${process.env.PUBLIC_URL}/games/${game.image}.jpg`|| '/default-game.jpg'} alt={game.title} className="game-image" />
       <p className="game-title">{game.title}</p>
       {/* Condicionalmente muestra el botón de descarga si es necesario */}
       {showDownloadButton && (
