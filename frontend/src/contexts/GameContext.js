@@ -47,7 +47,16 @@ export const GameProvider = ({ children }) => {
     if (!user) return;
     try {
       await axios.post(`https://pinksteam-production.up.railway.app/api/auth/games/user/${user.id || user.user_id}/add`, { game_id: gameId });
-      setLibrary(prev => [...prev, { id: gameId }]); // Se recargará en el próximo render
+      // Refresca la biblioteca desde el backend después de añadir
+      const res = await axios.get(`https://pinksteam-production.up.railway.app/api/auth/games/user/${user.id || user.user_id}`);
+      const mapped = res.data.map(game => ({
+        id: game.game_id,
+        title: game.name,
+        image: game.thumbnail_image ? `${process.env.PUBLIC_URL}/games/${game.thumbnail_image}.jpg` : '',
+        ...game
+      }));
+      setLibrary(mapped);
+      setError(null);
     } catch (err) {
       setError('No se pudo añadir el juego a tu biblioteca');
     }
@@ -58,7 +67,16 @@ export const GameProvider = ({ children }) => {
     if (!user) return;
     try {
       await axios.post(`https://pinksteam-production.up.railway.app/api/auth/games/user/${user.id || user.user_id}/remove`, { game_id: gameId });
-      setLibrary(prev => prev.filter(g => g.id !== gameId));
+      // Refresca la biblioteca desde el backend después de eliminar
+      const res = await axios.get(`https://pinksteam-production.up.railway.app/api/auth/games/user/${user.id || user.user_id}`);
+      const mapped = res.data.map(game => ({
+        id: game.game_id,
+        title: game.name,
+        image: game.thumbnail_image ? `${process.env.PUBLIC_URL}/games/${game.thumbnail_image}.jpg` : '',
+        ...game
+      }));
+      setLibrary(mapped);
+      setError(null);
     } catch (err) {
       setError('No se pudo eliminar el juego de tu biblioteca');
     }
