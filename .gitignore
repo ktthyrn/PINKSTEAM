@@ -31,3 +31,4 @@ coverage/
 
 #data importing
 #/BACKEND/data_import
+insert_descriptions.sql
