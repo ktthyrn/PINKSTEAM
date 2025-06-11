@@ -1,34 +1,43 @@
 // src/pages/Home.jsx
-import React, { useContext} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/home.css";
 import { GameContext } from "../contexts/GameContext";
-import { AuthContext } from '../contexts/AuthContext'; 
-
+import { AuthContext } from '../contexts/AuthContext';
 import GameItem from '../components/GameItem';
+import axios from 'axios';
 
 const Home = () => {
   const navigate = useNavigate();
-  const { library} = useContext(GameContext); // removeFromLibrary ya no es necesario aquí
-  const { isLoggedIn, user, logout } = useContext(AuthContext); 
+  const { library } = useContext(GameContext);
+  const { isLoggedIn, user, logout } = useContext(AuthContext);
+  const [games, setGames] = useState([]);
+  const [search, setSearch] = useState("");
 
-  const games = [
-  { id: 1, title: "The Witcher 3", image: `${process.env.PUBLIC_URL}/games/witcher.jpg` },
-  { id: 2, title: "Doom Eternal", image: `${process.env.PUBLIC_URL}/games/doom.jpg` },
-  { id: 3, title: "Cyberpunk 2077", image: `${process.env.PUBLIC_URL}/games/cyberpunk.jpg` },
-  { id: 4, title: "Minecraft", image: `${process.env.PUBLIC_URL}/games/minecraft.jpg` },
-  { id: 5, title: "Overwatch", image: `${process.env.PUBLIC_URL}/games/overwatch.jpg` },
-  { id: 6, title: "Hades", image: `${process.env.PUBLIC_URL}/games/hades.jpg` },
-  { id: 7, title: "Celeste", image: `${process.env.PUBLIC_URL}/games/celeste.jpg` },
-  { id: 8, title: "Hollow Knight", image: `${process.env.PUBLIC_URL}/games/hollowknight.jpg` },
-  { id: 9, title: "God of War", image: `${process.env.PUBLIC_URL}/games/godofwar.jpg` },
-  { id: 10, title: "Red Dead Redemption 2", image: `${process.env.PUBLIC_URL}/games/reddead2.jpg` },
-  { id: 11, title: "Stardew Valley", image: `${process.env.PUBLIC_URL}/games/stardew.jpg` },
-  { id: 12, title: "Valorant", image: `${process.env.PUBLIC_URL}/games/valorant.jpg` },
-  { id: 13, title: "Apex Legends", image: `${process.env.PUBLIC_URL}/games/apex.jpg` },
-  { id: 14, title: "Elden Ring", image: `${process.env.PUBLIC_URL}/games/eldenring.jpg` },
-  { id: 15, title: "Terraria", image: `${process.env.PUBLIC_URL}/games/terraria.jpg` }
-];
+  useEffect(() => {
+    const fetchGames = async () => {
+      try {
+        const res = await axios.get('https://pinksteam-production.up.railway.app/api/auth/games');
+        // Map backend fields to frontend expected fields
+        const mappedGames = res.data.map(game => ({
+          id: game.game_id,
+          title: game.name,
+          image: game.thumbnail_image ? `${process.env.PUBLIC_URL}/games/${game.thumbnail_image}.jpg` : '',
+          tags: Array.isArray(game.tags) ? game.tags : (typeof game.tags === 'string' ? game.tags.split(',').map(t => t.trim()) : []),
+          ...game
+        }));
+        setGames(mappedGames);
+      } catch (err) {
+        setGames([]);
+      }
+    };
+    fetchGames();
+  }, []);
+
+  // Filtrado por búsqueda
+  const filteredGames = games.filter(game =>
+    game.title && game.title.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
     <div className="home-container">
@@ -40,54 +49,32 @@ const Home = () => {
         <div className="header-buttons">
           {isLoggedIn ? (
             <>
-              {/* CAMBIO 1: Reordenar y ajustar el mensaje de bienvenida y biblioteca */}
-              <button className="btn library" onClick={() => navigate("/library")}>
-                MI BIBLIOTECA
-              </button>
+              <button className="btn library" onClick={() => navigate("/library")}>MI BIBLIOTECA</button>
               <span className="welcome-message">Hola, {user ? user.name : 'Usuario'}</span>
-              <button className="btn logout" onClick={logout}>
-                Cerrar Sesión
-              </button>
+              <button className="btn logout" onClick={logout}>Cerrar Sesión</button>
             </>
           ) : (
             <>
-              <button className="btn games" onClick={() => navigate("/games")}> 
-                JUEGOS
-              </button>
-              <button className="btn login" onClick={() => navigate("/login")}>
-                INICIAR SESIÓN
-              </button>
-              <button className="btn register" onClick={() => navigate("/register")}>
-                REGISTRARSE
-              </button>
+              <button className="btn games" onClick={() => navigate("/games")}>JUEGOS</button>
+              <button className="btn login" onClick={() => navigate("/login")}>INICIAR SESIÓN</button>
+              <button className="btn register" onClick={() => navigate("/register")}>REGISTRARSE</button>
             </>
           )}
         </div>
       </header>
-
       <nav className="navbar">
-        <button className="btn menu" onClick={() => navigate("/games")}>
-          MENU
-        </button>
-        <span className="support">
-          <i className="fa-solid fa-desktop"></i> ACERCA DE SOPORTE
-        </span>
+        <button className="btn menu" onClick={() => navigate("/games")}>MENU</button>
+        <span className="support"><i className="fa-solid fa-desktop"></i> ACERCA DE SOPORTE</span>
         <div className="game-context-test">
-          {/* CAMBIO 2: Eliminar "Añadir Test" y los asteriscos */}
-          <span>Biblioteca: {library.length} juegos</span> 
+          <span>Biblioteca: {library.length} juegos</span>
         </div>
-        <input type="text" className="search-bar" placeholder="BUSCAR" />
+        <input type="text" className="search-bar" placeholder="BUSCAR" value={search} onChange={e => setSearch(e.target.value)} />
       </nav>
-
       <main className="main-content">
         <h2 className="section-title">NUESTROS JUEGOS ...</h2>
         <div className="game-gallery">
-          {games.map((game) => (
-            <div
-              key={game.id} 
-              className="game-card-link" 
-              onClick={() => navigate(`/game/${game.id}`)} 
-            >
+          {filteredGames.map((game) => (
+            <div key={game.id} className="game-card-link" onClick={() => navigate(`/game/${game.id}`)}>
               <GameItem game={game} />
             </div>
           ))}

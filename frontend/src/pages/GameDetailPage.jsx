@@ -26,7 +26,7 @@ export const GameDetailPage = () => {
                 const mappedGames = res.data.map(game => ({
                     id: game.game_id,
                     title: game.name,
-                    image: game.thumbnail_image || game.image ||game.thumbnail ,
+                    image: game.thumbnail_image ? `${process.env.PUBLIC_URL}/games/${game.thumbnail_image}.jpg` : '',
                     tags: game.tags ? (Array.isArray(game.tags) ? game.tags : (typeof game.tags === 'string' ? game.tags.split(',').map(t => t.trim()) : []) ) : [],
                     ...game
                 }));
@@ -91,7 +91,7 @@ export const GameDetailPage = () => {
             <div className="game-content-layout">
                 <div className="top-section">
                     <div className="game-media">
-                        <img src={`${process.env.PUBLIC_URL}/games/${game.thumbnail_image}.jpg` || '/default-game.jpg' || game.image } alt={game.title} className="game-main-image" />
+                        <img src={game.image || `${process.env.PUBLIC_URL}/games/default-game.jpg`} alt={game.title} className="game-main-image" />
                     </div>
                     <div className="game-actions">
                         <button
