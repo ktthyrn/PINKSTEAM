@@ -3,6 +3,8 @@ import React, { useState, useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext'; // CAMBIO: de context a contexts
 import axios from 'axios';
 import './../styles/auth.css';
+import { useNavigate } from 'react-router-dom';
+
 
 const RegisterForm = () => {
     const [email, setEmail] = useState('');
@@ -12,6 +14,7 @@ const RegisterForm = () => {
     const [error, setError] = useState('');
 
     const { login } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -32,8 +35,7 @@ const RegisterForm = () => {
             await axios.post('https://pinksteam-production.up.railway.app/api/auth/register', { name, email, password });
             console.log('Registro exitoso!');
             alert('Usuario registrado con éxito. Ahora inicia sesión.');
-            // Redirigir a la página de login o limpiar el formulario
-            window.location.href = '/login';
+            navigate('/login');
         } catch (err) {
             setError('Error al registrar el usuario.');
             console.error('Error durante el registro:', err);
