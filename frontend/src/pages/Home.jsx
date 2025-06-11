@@ -13,28 +13,28 @@ const Home = () => {
   const { isLoggedIn, user, logout } = useContext(AuthContext); 
 
   const games = [
-    { id: 1, title: "The Witcher 3", image: "/games/witcher.jpg" },
-    { id: 2, title: "Doom Eternal", image: "/games/doom.jpg" },
-    { id: 3, title: "Cyberpunk 2077", image: "/games/cyberpunk.jpg" },
-    { id: 4, title: "Minecraft", image: "/games/minecraft.jpg" },
-    { id: 5, title: "Overwatch", image: "/games/overwatch.jpg" },
-    { id: 6, title: "Hades", image: "/games/hades.jpg" },
-    { id: 7, title: "Celeste", image: "/games/celeste.jpg" },
-    { id: 8, title: "Hollow Knight", image: "/games/hollowknight.jpg" },
-    { id: 9, title: "God of War", image: "/games/godofwar.jpg" },
-    { id: 10, title: "Red Dead Redemption 2", image: "/games/reddead2.jpg" },
-    { id: 11, title: "Stardew Valley", image: "/games/stardew.jpg" },
-    { id: 12, title: "Valorant", image: "/games/valorant.jpg" },
-    { id: 13, title: "Apex Legends", image: "/games/apex.jpg" },
-    { id: 14, title: "Elden Ring", image: "/games/eldenring.jpg" },
-    { id: 15, title: "Terraria", image: "/games/terraria.jpg" }
-  ];
+  { id: 1, title: "The Witcher 3", image: `${process.env.PUBLIC_URL}/games/witcher.jpg` },
+  { id: 2, title: "Doom Eternal", image: `${process.env.PUBLIC_URL}/games/doom.jpg` },
+  { id: 3, title: "Cyberpunk 2077", image: `${process.env.PUBLIC_URL}/games/cyberpunk.jpg` },
+  { id: 4, title: "Minecraft", image: `${process.env.PUBLIC_URL}/games/minecraft.jpg` },
+  { id: 5, title: "Overwatch", image: `${process.env.PUBLIC_URL}/games/overwatch.jpg` },
+  { id: 6, title: "Hades", image: `${process.env.PUBLIC_URL}/games/hades.jpg` },
+  { id: 7, title: "Celeste", image: `${process.env.PUBLIC_URL}/games/celeste.jpg` },
+  { id: 8, title: "Hollow Knight", image: `${process.env.PUBLIC_URL}/games/hollowknight.jpg` },
+  { id: 9, title: "God of War", image: `${process.env.PUBLIC_URL}/games/godofwar.jpg` },
+  { id: 10, title: "Red Dead Redemption 2", image: `${process.env.PUBLIC_URL}/games/reddead2.jpg` },
+  { id: 11, title: "Stardew Valley", image: `${process.env.PUBLIC_URL}/games/stardew.jpg` },
+  { id: 12, title: "Valorant", image: `${process.env.PUBLIC_URL}/games/valorant.jpg` },
+  { id: 13, title: "Apex Legends", image: `${process.env.PUBLIC_URL}/games/apex.jpg` },
+  { id: 14, title: "Elden Ring", image: `${process.env.PUBLIC_URL}/games/eldenring.jpg` },
+  { id: 15, title: "Terraria", image: `${process.env.PUBLIC_URL}/games/terraria.jpg` }
+];
 
   return (
     <div className="home-container">
       <header className="header">
         <div className="logo">
-          <img src="/games/logowo.png" alt="logo" className="logo-img" />
+          <img src={`${process.env.PUBLIC_URL}/games/logowo.png`} alt="logo" className="logo-img" />
           <h1 className="title">PinkSteam</h1>
         </div>
         <div className="header-buttons">
