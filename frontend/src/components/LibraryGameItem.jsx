@@ -10,7 +10,7 @@ const LibraryGameItem = ({ game, onDownloadClick }) => {
 
     return (
         <div className="library-game-card">
-            <img src={`/games/${game.thumbnail_image || game.thumbnail}.jpg`} alt={game.title} className="library-game-image" />
+            <img src={`${process.env.PUBLIC_URL}/games/${game.thumbnail_image}.jpg`} alt={game.title} className="library-game-image" />
             <div className="library-game-info">
                 <h3 className="library-game-title">{game.title}</h3>
                 {/* Puedes añadir más detalles aquí si los tienes en 'game' y quieres mostrarlos */}

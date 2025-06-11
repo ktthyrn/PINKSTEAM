@@ -91,7 +91,7 @@ export const GameDetailPage = () => {
             <div className="game-content-layout">
                 <div className="top-section">
                     <div className="game-media">
-                        <img src={`/games/${game.thumbnail_image}.jpg` || '/default-game.jpg' || game.image } alt={game.title} className="game-main-image" />
+                        <img src={`${process.env.PUBLIC_URL}/games/${game.thumbnail_image}.jpg` || '/default-game.jpg' || game.image } alt={game.title} className="game-main-image" />
                     </div>
                     <div className="game-actions">
                         <button
