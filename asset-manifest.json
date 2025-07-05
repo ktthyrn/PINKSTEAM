@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/PINKSTEAM/static/css/main.f893d17b.css",
-    "main.js": "/PINKSTEAM/static/js/main.31d75d80.js",
+    "main.css": "/PINKSTEAM/static/css/main.68e00193.css",
+    "main.js": "/PINKSTEAM/static/js/main.4c8912ff.js",
     "index.html": "/PINKSTEAM/index.html",
-    "main.f893d17b.css.map": "/PINKSTEAM/static/css/main.f893d17b.css.map",
-    "main.31d75d80.js.map": "/PINKSTEAM/static/js/main.31d75d80.js.map"
+    "main.68e00193.css.map": "/PINKSTEAM/static/css/main.68e00193.css.map",
+    "main.4c8912ff.js.map": "/PINKSTEAM/static/js/main.4c8912ff.js.map"
   },
   "entrypoints": [
-    "static/css/main.f893d17b.css",
-    "static/js/main.31d75d80.js"
+    "static/css/main.68e00193.css",
+    "static/js/main.4c8912ff.js"
   ]
 }
