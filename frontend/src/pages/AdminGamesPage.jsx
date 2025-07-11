@@ -2,6 +2,8 @@ import React, { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { Navigate } from 'react-router-dom';
 import '../styles/AdminGamesPage.css';
+import '../styles/AdminGamesPageFont.css';
+
 
 const AdminGamesPage = () => {
     const { isLoggedIn, isAdmin } = useContext(AuthContext);
